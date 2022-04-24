@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 3.11)
 
 project(plugins)
 
-# установка выходного пути для плагинов
 function(set_plugin_dir target)
     set(PLUGIN_DIR "plugins")
     set_target_properties(${target} PROPERTIES
@@ -18,5 +17,5 @@ endfunction()
 set(CMAKE_AUTOMOC ON)
 
 add_subdirectory(telegramBot)
-add_subdirectory(dataBase)
 add_subdirectory(tinkoffInvest)
+add_subdirectory(dataBase)
