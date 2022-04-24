@@ -1,0 +1,3 @@
+[submodule "src/plugins/tinkoffInvest/TinkoffInvestSDK"]
+	path = src/plugins/tinkoffInvest/TinkoffInvestSDK
+	url = https://github.com/samoilovv/TinkoffInvestSDK.git

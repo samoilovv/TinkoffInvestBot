@@ -5,7 +5,6 @@ project(TelegramBotPlugin)
 find_package(Qt5 REQUIRED COMPONENTS Core Sql)
 
 add_library(${PROJECT_NAME} MODULE
-    telegramBotConsts.h
     telegramBotPlugin.h
     telegramBotPlugin.cpp
 )

@@ -30,7 +30,7 @@ public slots:
 class TinkoffManager: public QObject, public hevaa::IModulePlugin
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID "ru.mamavrn.Hevaa.BlankPlugin.1.0" FILE "tinkoffInvestPlugin.json")
+    Q_PLUGIN_METADATA(IID "ru.Hevaa.BlankPlugin.1.0" FILE "tinkoffInvestPlugin.json")
     Q_INTERFACES(
             hevaa::IModulePlugin
             )

@@ -22,7 +22,7 @@ private:
     QSharedPointer<LogConfigurator> m_logConf;
     QSharedPointer<PluginsLoader> m_pluginsLoader;
     QSharedPointer<workerManager> WManager;
-    ModulesList *m_modules_list;
+//    ModulesList *m_modules_list;
 };
 
 #endif // MAIN_HEVAAAPPLICATION_H

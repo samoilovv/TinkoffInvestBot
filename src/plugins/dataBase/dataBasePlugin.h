@@ -27,7 +27,7 @@ public:
 class DataBaseManager: public QObject, public hevaa::IModulePlugin
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID "ru.mamavrn.Hevaa.DataBasePlugin.1.0" FILE "dataBasePlugin.json")
+    Q_PLUGIN_METADATA(IID "ru.Hevaa.DataBasePlugin.1.0" FILE "dataBasePlugin.json")
     Q_INTERFACES(
             hevaa::IModulePlugin
             )
