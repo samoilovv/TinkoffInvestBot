@@ -47,7 +47,6 @@ target_include_directories(${PROJECT_NAME}
 target_link_libraries(${PROJECT_NAME}
     PRIVATE
     Qt5::Core
-    Qt5::Sql
     hevaa::interfaces
     hevaa::core
     Worker
@@ -61,18 +60,6 @@ endif()
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE VERSION_HEVAA="${VER}")
 
-#Информацию о сборке
 message("---------------------------------
-Configuration  = ${CMAKE_BUILD_TYPE}
----------------------------------
-Product = ${PROJECT_NAME}
 Version = ${VER}
-Qt version = ${Qt5Core_VERSION}
-Build path = ${CMAKE_BINARY_DIR}
-Compiler = ${CMAKE_CXX_COMPILER_ID}
-Compiler path = ${CMAKE_CXX_COMPILER}
-Compiler flags = ${CMAKE_CXX_FLAGS}
-Linker flags = ${CMAKE_EXE_LINKER_FLAGS}
-Install path = ${INSTALLATION_DIR}
----------------------------------
-")
+---------------------------------")

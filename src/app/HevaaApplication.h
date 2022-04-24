@@ -3,7 +3,6 @@
 
 #include <QCoreApplication>
 #include <QSharedPointer>
-#include "LogConfigurator.h"
 #include "pluginsloader.h"
 #include "worker.h"
 #include "hevaa_common.h"
@@ -19,10 +18,8 @@ public:
 
 private:
     QString password;
-    QSharedPointer<LogConfigurator> m_logConf;
     QSharedPointer<PluginsLoader> m_pluginsLoader;
     QSharedPointer<workerManager> WManager;
-//    ModulesList *m_modules_list;
 };
 
 #endif // MAIN_HEVAAAPPLICATION_H

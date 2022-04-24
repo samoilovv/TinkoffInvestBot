@@ -3,7 +3,6 @@
 
 #include <QDebug>
 #include <QMetaType>
-
 #include "hevaa_tree.h"
 
 namespace hevaa {

@@ -1,8 +1,6 @@
 #include <QDebug>
 #include <QCoreApplication>
-
 #include <QMetaMethod>
-
 #include "hevaa_consts.h"
 #include "hevaa_transport.h"
 #include "hevaa_tree.h"

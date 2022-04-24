@@ -1,26 +1,16 @@
 #include <csignal>
 #include <QDebug>
-
 #include "version.h"
-#include "LogConfigurator.h"
-#include "simpleQtLogger.h"
 #include "HevaaApplication.h"
 
 HevaaApplication::HevaaApplication(int& argc, char **argv[]) : QCoreApplication (argc, *argv)
 {
-    setOrganizationDomain("mamavrn.ru");
-    setOrganizationName("mamavrn");
     setApplicationVersion(QString("%1").arg(MY_VERSION));
 }
 
 void HevaaApplication::init(QString psw)
 {
     password = psw;
-    m_logConf = QSharedPointer<LogConfigurator>::create(this);
-    auto header = QString("================ \r\n"
-                      "\t Запуск приложения \r\n"
-                      "============================================ \r\n");
-    LS_INFO(header);
     qDebug() << "The main thread is" << QThread::currentThread();
     this->setObjectName(applicationName());
 

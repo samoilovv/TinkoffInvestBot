@@ -4,8 +4,6 @@
 #include <QPluginLoader>
 #include <QSharedPointer>
 #include <QSettings>
-
-#include "HevaaStandardPaths.h"
 #include "hevaa_consts.h"
 #include "hidestring.h"
 #include "customcomponent.h"
@@ -51,7 +49,7 @@ ModulesList *PluginsLoader::modulesList()
 
 bool PluginsLoader::loadSettings()
 {
-    QString SettingsFillPath = StandardPaths::hevaaStandardLocation(StandardPaths::ConfigHevaaLocation) + c_SettingsFile;
+    QString SettingsFillPath = c_SettingsFile;
     QSettings settings(SettingsFillPath, QSettings::IniFormat);
     uint i = settings.value("count").toUInt();
     m_isSettingsOk = i == defCount;
@@ -98,7 +96,7 @@ void PluginsLoader::startModules()
 
 void PluginsLoader::saveSettings()
 {
-    QString fullFileName = StandardPaths::hevaaStandardLocation(StandardPaths::ConfigHevaaLocation) + c_SettingsFile;
+    QString fullFileName = c_SettingsFile;
     if (QFileInfo(fullFileName).exists())
     {
         QSettings settings(fullFileName, QSettings::IniFormat);

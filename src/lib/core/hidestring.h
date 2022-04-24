@@ -32,8 +32,6 @@ QString codeDecode(QString qin, QString qkey = "")
         std::string myStr = str.c('g').c('F').c('H').c('z').c('}').c('m').c('H').c('>').c('d').c('j').c('w').c('r').c('Q').c('x').c('3').c('V').c('l').c('s').c('p').c('F').c('"').c('E').c('b').c('<').c('H').c('O').c('P').c('T').c('X').c('f');
         qkey = QString::fromStdString(myStr);
     }
-    //здесь нужно сделать жесткую копию стд стринга,
-    //иначе ключ более 15 символов не работал (про использовании qstring создается представление стд строки)
     std::string strkey = qkey.toStdString().c_str();
     key = strkey.c_str();
     keyLength = qkey.toStdString().length();
@@ -46,7 +44,7 @@ QString codeDecode(QString qin, QString qkey = "")
 }
 
 namespace alphaConst {
-    Alpha str(""); //str должен быть пустым перед использованием
+    Alpha str("");
     std::string pass = str.c('P').c('A').c('S').c('S');
     const QString qPrefix(QString::fromStdString(pass));
 }

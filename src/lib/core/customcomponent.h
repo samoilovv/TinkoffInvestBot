@@ -3,7 +3,6 @@
 
 #include <QObject>
 #include <QTimer>
-
 #include "hevaa_common.h"
 #include "hevaa_message.h"
 #include "hevaa_tree.h"

@@ -11,7 +11,6 @@ else()
     add_library(${PROJECT_NAME}
         INTERFACE
             ${CMAKE_CURRENT_SOURCE_DIR}/imoduleplugin.h
-            ${CMAKE_CURRENT_SOURCE_DIR}/test-plugin.h
     )
 endif()
 

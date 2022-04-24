@@ -2,7 +2,6 @@
 #include <QCoreApplication>
 #include <QtSql/QSqlQuery>
 #include <QDateTime>
-
 #include "hevaa_consts.h"
 #include "dataBasePlugin.h"
 
@@ -10,7 +9,7 @@ using namespace hevaa;
 
 DataBaseWriter::DataBaseWriter(AppSettins &plugin_settings): CustomComponent(plugin_settings)
 {
-    setObjectName(COMPONENT_NAME_BLANK);
+    setObjectName(COMPONENT_NAME_DATABASE);
     try {
         m_db = QSqlDatabase::addDatabase("QPSQL");
         m_db.setHostName(plugin_settings["DBHOST"]);

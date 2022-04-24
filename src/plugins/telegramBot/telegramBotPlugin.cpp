@@ -1,7 +1,6 @@
 #include <QDebug>
 #include <QStringList>
 #include <QCoreApplication>
-
 #include "telegramBotPlugin.h"
 #include "hevaa_message.h"
 #include "hevaa_consts.h"
