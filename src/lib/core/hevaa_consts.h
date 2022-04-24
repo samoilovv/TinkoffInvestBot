@@ -5,15 +5,18 @@
 
 namespace hevaa {
 
-    static const auto defCount = 6;
-    static const auto c_SettingsFile {"/hevaa.ini"};
+    static const QString APP_UNIQUE_SEMAPHORE = "Hevaa unique sync name";
+    static const QString APP_UNIQUE_NAME = "Hevaa unique single apllication name";
 
-    static const auto MODULE_NAME_TELEGRAM      = QLatin1String("telegramBotModule");
-    static const auto COMPONENT_NAME_TELEGRAM   = QLatin1String("telegramBotComponent");
-    static const auto MODULE_NAME_DATABASE      = QLatin1String("dataBaseModule");
-    static const auto COMPONENT_NAME_DATABASE   = QLatin1String("dataBaseComponent");
-    static const auto MODULE_NAME_TINKOFF       = QLatin1String("tinkoffModule");
-    static const auto COMPONENT_NAME_TINKOFF    = QLatin1String("tinkoffComponent");
+    static const int defCount = 6;
+    static const QString c_SettingsFile {"settings.ini"};
+
+    static const QString MODULE_NAME_TELEGRAM      = QLatin1String("telegramBotModule");
+    static const QString COMPONENT_NAME_TELEGRAM   = QLatin1String("telegramBotComponent");
+    static const QString MODULE_NAME_DATABASE      = QLatin1String("dataBaseModule");
+    static const QString COMPONENT_NAME_DATABASE   = QLatin1String("dataBaseComponent");
+    static const QString MODULE_NAME_TINKOFF       = QLatin1String("tinkoffModule");
+    static const QString COMPONENT_NAME_TINKOFF    = QLatin1String("tinkoffComponent");
 
 }
 

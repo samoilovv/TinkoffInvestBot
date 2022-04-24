@@ -4,37 +4,32 @@
 #include <QDebug>
 #include <QCommandLineParser>
 #include "HevaaApplication.h"
-
-static const QString SINGLE_APPLICATION_UNIQUE_SEMAPHORE = "Hevaa unique sync name";
-static const QString SINGLE_APPLICATION_UNIQUE_NAME = "Hevaa unique single apllication name";
+#include "hevaa_consts.h"
 
 int main(int argc, char *argv[])
 {
-    //---------------
-    QSystemSemaphore sema(SINGLE_APPLICATION_UNIQUE_SEMAPHORE, 1);
-    // Проверка на единственность запущенного экземпляра
-    sema.acquire();
+    QSystemSemaphore qss(hevaa::APP_UNIQUE_SEMAPHORE, 1);
+    qss.acquire();
     {
-        QSharedMemory shmem(SINGLE_APPLICATION_UNIQUE_NAME);
-        shmem.attach();
+        QSharedMemory qsm(hevaa::APP_UNIQUE_NAME);
+        qsm.attach();
     }
-    QSharedMemory shmem(SINGLE_APPLICATION_UNIQUE_NAME);
-    bool isRunning = shmem.attach();
-    if(!isRunning) {
-        shmem.create(1);
+    QSharedMemory qsm(hevaa::APP_UNIQUE_NAME);
+    bool isRunning = qsm.attach();
+    if (!isRunning) {
+        qsm.create(1);
     }
-    sema.release();
+    qss.release();
     if(isRunning) {
-        qFatal("Application already started");
+        qFatal("The app already started");
     }
-    //----------------
     HevaaApplication app(argc, &argv);
     QCommandLineParser parser;
     parser.setSingleDashWordOptionMode(QCommandLineParser::ParseAsLongOptions);
-    parser.setApplicationDescription("Описание программы Hevaa");
+    parser.setApplicationDescription("Telegram Bot for TinkoffInvest");
     parser.addHelpOption();
     parser.addVersionOption();
-    parser.addPositionalArgument("password", "Пароль для декодирования настроек подключения к БД");
+    parser.addPositionalArgument("password", "Password used to encrypt and decrypt the settings");
     parser.process(app);
 
     const QStringList args(parser.positionalArguments());

@@ -24,11 +24,9 @@ target_link_libraries(${PROJECT_NAME}
     Qt5::Core
     hevaa::interfaces
     hevaa::core
-    hw_grpc_proto
-    SDK
+    TinkoffInnvestSDK
     )
 
-# Include generated *.pb.h files
 include_directories(${CMAKE_CURRENT_BINARY_DIR}/TinkoffInvestSDK)
 
 set_plugin_dir(${PROJECT_NAME})
