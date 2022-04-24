@@ -24,10 +24,11 @@ target_link_libraries(${PROJECT_NAME}
     Qt5::Core
     hevaa::interfaces
     hevaa::core
+    hw_grpc_proto
     TinkoffInvestSDK
     )
 
-#include_directories(${CMAKE_CURRENT_BINARY_DIR}/TinkoffInvestSDK)
+include_directories(${CMAKE_CURRENT_BINARY_DIR}/TinkoffInvestSDK)
 
 set_plugin_dir(${PROJECT_NAME})
 
