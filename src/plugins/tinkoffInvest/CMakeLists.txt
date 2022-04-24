@@ -29,9 +29,9 @@ target_link_libraries(${PROJECT_NAME}
     )
 
 # Include generated *.pb.h files
-include_directories(${CMAKE_CURRENT_BINARY_DIR}/SDK)
+include_directories(${CMAKE_CURRENT_BINARY_DIR}/TinkoffInvestSDK)
 
 set_plugin_dir(${PROJECT_NAME})
 
-add_subdirectory(SDK)
+add_subdirectory(TinkoffInvestSDK)
 

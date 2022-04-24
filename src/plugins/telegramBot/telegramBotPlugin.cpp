@@ -3,7 +3,6 @@
 #include <QCoreApplication>
 
 #include "telegramBotPlugin.h"
-#include "telegramBotConsts.h"
 #include "hevaa_message.h"
 #include "hevaa_consts.h"
 
