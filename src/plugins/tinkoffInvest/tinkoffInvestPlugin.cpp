@@ -42,12 +42,6 @@ const hevaa::transport::Node TinkoffComponent::ComponentInfo()
 hevaa::transport::Row TinkoffComponent::getServicesList(const QSharedPointer<InvestApiClient> iap, const QString &prefix)
 {
     return iap ? iap->getServiceMethods(prefix) : hevaa::transport::Row({});
-//    hevaa::transport::Row result;
-//    if (iap)
-//    {
-//        result = iap->getServiceMethods(prefix);
-//    }
-//    return result;
 }
 
 void TinkoffComponent::handleData(const hevaa::transport::message &msg)

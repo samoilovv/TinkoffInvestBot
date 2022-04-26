@@ -12,6 +12,21 @@
 
 using namespace TgBot;
 
+class LongPollsExecuter: public QObject
+{
+Q_OBJECT
+
+public:
+    LongPollsExecuter(const QSharedPointer<TgBot::Bot> m_bot);
+
+public slots:
+    void execute();
+
+private:
+    QSharedPointer<TgBot::Bot> m_bot;
+
+};
+
 class TelegramBot: public CustomComponent
 {
 Q_OBJECT
@@ -22,6 +37,8 @@ protected:
 
 private:
     QSharedPointer<TgBot::Bot> m_bot;
+    QSharedPointer<LongPollsExecuter> m_longPollsExecutor;
+    QThread m_longPollsThread;
     std::int64_t m_chatid {0};
 
 public:

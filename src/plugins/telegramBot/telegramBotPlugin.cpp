@@ -77,13 +77,19 @@ TelegramBot::TelegramBot(AppSettins plugin_settings): CustomComponent(plugin_set
     token.append(":");
     token.append(m_plugin_settings["TGPASS"].toStdString());
     m_bot = QSharedPointer<Bot>::create(token);
-
+    m_longPollsExecutor = QSharedPointer<LongPollsExecuter>::create(m_bot);
+    m_longPollsExecutor.get()->moveToThread(&m_longPollsThread);
+    connect(&m_longPollsThread, &QThread::started, m_longPollsExecutor.get(), &LongPollsExecuter::execute, Qt::QueuedConnection);
+    connect(&m_longPollsThread, &QThread::started, [](){ qDebug() << "longPollsThread send signal started!"; });
+    m_longPollsThread.start();
     qDebug() << objectName() << "created and timer started!";
 }
 
 TelegramBot::~TelegramBot()
 {
-
+    m_longPollsThread.requestInterruption();
+    m_longPollsThread.quit();
+    m_longPollsThread.wait();
 }
 
 void TelegramBot::handleData(const hevaa::transport::message &msg)
@@ -101,51 +107,35 @@ void TelegramBot::handleData(const hevaa::transport::message &msg)
 void TelegramBot::slotDoWork()
 {
     qDebug() << "The TelegramBot thread is" << QThread::currentThread();
-    try {
 
-        m_bot->getEvents().onCommand("start", [this](Message::Ptr message) {
-            m_chatid = message->chat->id;
-            qDebug() << "Chat id:" << m_chatid;
-            m_bot->getApi().sendMessage(m_chatid, "Hevaa bot is started");
-        });
 
-        //передавать сообщения в бд
-        m_bot->getEvents().onAnyMessage([this/*, &keyboard*/](Message::Ptr message) {
+    m_bot->getEvents().onCommand("start", [this](Message::Ptr message) {
+        m_chatid = message->chat->id;
+        qDebug() << "Chat id:" << m_chatid;
+        m_bot->getApi().sendMessage(m_chatid, "Hevaa bot is started");
+    });
 
-            qInfo() << QString("User %2 wrote %1").arg(message->text.c_str()).arg(message->from->firstName.c_str());
-            if (StringTools::startsWith(message->text, "/start")) {
-                return;
-            }
-            m_chatid = message->chat->id;
-            qDebug() << "Chat id:" << m_chatid;
+    //передавать сообщения в бд
+    m_bot->getEvents().onAnyMessage([this/*, &keyboard*/](Message::Ptr message) {
 
-//            auto keyboard = createButtoms(nullptr);
-//            m_bot->getApi().sendMessage(m_chatid, "Your message is: " + message->text, false,  0, keyboard, "MarkdownV2");
-
-            //запись в БД
-            QStringList sl;
-            sl << QString::fromStdString(message->from->username) << QString::fromStdString(message->text);
-            hevaa::transport::message hm(hevaa::transport::Info, hevaa::transport::Node::create(hevaa::transport::Row({sl})));
-            emit transmitData(hm);
-        });
-
-        qInfo() << QString("Bot username: %1").arg(m_bot->getApi().getMe()->username.c_str());
-        m_bot->getApi().deleteWebhook();
-
-        TgLongPoll longPoll(*m_bot.data());
-        while (true) {
-            if (QThread::currentThread()->isInterruptionRequested()) {
-                return;
-            }
-            qInfo() << "Long poll started";
-
-            QCoreApplication::processEvents();
-
-            longPoll.start();
+        qInfo() << QString("User %2 wrote %1").arg(message->text.c_str()).arg(message->from->firstName.c_str());
+        if (StringTools::startsWith(message->text, "/start")) {
+            return;
         }
-    } catch (std::exception& e) {
-         qCritical() << QString("error: %1").arg(e.what());
-    }
+        m_chatid = message->chat->id;
+        qDebug() << "Chat id:" << m_chatid;
+
+    //            auto keyboard = createButtoms(nullptr);
+    //            m_bot->getApi().sendMessage(m_chatid, "Your message is: " + message->text, false,  0, keyboard, "MarkdownV2");
+
+        //запись в БД
+        QStringList sl;
+        sl << QString::fromStdString(message->from->username) << QString::fromStdString(message->text);
+        hevaa::transport::message hm(hevaa::transport::Info, hevaa::transport::Node::create(hevaa::transport::Row({sl})));
+        emit transmitData(hm);
+    });
+
+    qInfo() << QString("Bot username: %1").arg(m_bot->getApi().getMe()->username.c_str());
 }
 
 TelegramManager::~TelegramManager()
@@ -189,4 +179,27 @@ void TelegramManager::stopModule()
     m_telegramThread.requestInterruption();
     m_telegramThread.quit();
     m_telegramThread.wait();
+}
+
+LongPollsExecuter::LongPollsExecuter(const QSharedPointer<Bot> m_bot) : m_bot(m_bot)
+{
+
+}
+
+void LongPollsExecuter::execute()
+{
+    try {
+        m_bot->getApi().deleteWebhook();
+        TgLongPoll longPoll(*m_bot.data());
+        while (true) {
+            if (QThread::currentThread()->isInterruptionRequested()) {
+                return;
+            }
+            qInfo() << "Long poll started";
+            longPoll.start();
+            QCoreApplication::processEvents();
+        }
+    } catch (TgBot::TgException& e) {
+         qCritical() << QString("error: %1").arg(e.what());
+    }
 }
