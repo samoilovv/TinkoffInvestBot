@@ -7,6 +7,7 @@
 #include "tinkoffInvestPlugin.h"
 #include "tinkoffInvestConsts.h"
 #include "customservice.h"
+#include "sandboxservice.h"
 #include "servicereply.h"
 
 using namespace hevaa;
