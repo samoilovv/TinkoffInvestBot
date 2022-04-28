@@ -112,7 +112,7 @@ void TelegramBot::slotDoWork()
     m_bot->getEvents().onCommand("start", [this](Message::Ptr message) {
         m_chatid = message->chat->id;
         qDebug() << "Chat id:" << m_chatid;
-        m_bot->getApi().sendMessage(m_chatid, "Hevaa bot is started");
+        m_bot->getApi().sendMessage(m_chatid, "TinkoffInvestBot is started");
     });
 
     //передавать сообщения в бд

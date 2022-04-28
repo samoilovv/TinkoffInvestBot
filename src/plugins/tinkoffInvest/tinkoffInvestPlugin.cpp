@@ -6,12 +6,14 @@
 #include "hevaa_tree.h"
 #include "tinkoffInvestPlugin.h"
 #include "tinkoffInvestConsts.h"
-#include "tinkoffInvestUtils.h"
+#include "customservice.h"
+#include "servicereply.h"
 
 using namespace hevaa;
 
 TinkoffComponent::TinkoffComponent(AppSettins &plugin_settings): CustomComponent(plugin_settings)
 {
+    qRegisterMetaType<ServiceReply>();
     setObjectName(COMPONENT_NAME_TINKOFF);
     m_greeter = QSharedPointer<InvestApiClient>::create(m_plugin_settings["TINKHOST"], m_plugin_settings["TINKPASS"]);
 }
@@ -52,7 +54,7 @@ void TinkoffComponent::handleData(const hevaa::transport::message &msg)
         {
             qDebug() << "Sending request to tinkoff...";
 
-            QString reply;
+            ServiceReply reply;
             QString func = msg.body().get()->data(0).toString();
             QString srv = msg.body().get()->data(1).toString();
             if (m_greeter.get()->service(srv).get())
@@ -60,10 +62,11 @@ void TinkoffComponent::handleData(const hevaa::transport::message &msg)
                 QMetaObject::invokeMethod(m_greeter.get()->service(srv).get(),
                                       func.toStdString().c_str(),
                                       Qt::DirectConnection,
-                                      Q_RETURN_ARG(QString, reply)
+                                      Q_RETURN_ARG(ServiceReply, reply)
                                    );
-                qDebug() << "Greeter received:" << reply;
-                hevaa::transport::message hm(hevaa::transport::Info, hevaa::transport::Node::create(hevaa::transport::Row{reply}));
+                QString str = QString::fromStdString(reply.replyPtr().get()->DebugString());
+                qDebug() << "Greeter received:" << str;
+                hevaa::transport::message hm(hevaa::transport::Info, hevaa::transport::Node::create(hevaa::transport::Row{str}));
                 emit transmitData(hm);
             } else
             {

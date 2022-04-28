@@ -1,11 +1,10 @@
 cmake_minimum_required(VERSION 3.11)
 
-project(tinkoffInvest)
+project(tinkoffInvestPlugin)
 
-find_package(Qt5 REQUIRED COMPONENTS Core Sql)
+find_package(Qt5 REQUIRED COMPONENTS Core)
 
 add_library(${PROJECT_NAME} MODULE
-    tinkoffInvestUtils.h
     tinkoffInvestConsts.h
     tinkoffInvestPlugin.h
     tinkoffInvestPlugin.cpp
@@ -28,7 +27,7 @@ target_link_libraries(${PROJECT_NAME}
     TinkoffInvestSDK
     )
 
-include_directories(${CMAKE_CURRENT_BINARY_DIR}/TinkoffInvestSDK)
+#include_directories(${CMAKE_CURRENT_SOURCE_DIR}/TinkoffInvestSDK)
 
 set_plugin_dir(${PROJECT_NAME})
 

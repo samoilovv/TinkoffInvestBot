@@ -7,8 +7,6 @@
 #include "customcomponent.h"
 #include "investapiclient.h"
 
-
-
 class TinkoffComponent : public CustomComponent
 {
 Q_OBJECT

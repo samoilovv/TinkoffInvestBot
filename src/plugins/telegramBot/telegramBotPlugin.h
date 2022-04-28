@@ -3,7 +3,6 @@
 
 #include <QThread>
 #include <QSharedPointer>
-
 #include "hevaa_common.h"
 #include "hevaa_tree.h"
 #include "imoduleplugin.h"
