@@ -65,7 +65,7 @@ void TinkoffComponent::handleData(const hevaa::transport::message &msg)
                                       Qt::DirectConnection,
                                       Q_RETURN_ARG(ServiceReply, reply)
                                    );
-                QString str = QString::fromStdString(reply.replyPtr().get()->DebugString());
+                QString str = QString::fromStdString(reply.ptr().get()->DebugString());
                 qDebug() << "Greeter received:" << str;
                 hevaa::transport::message hm(hevaa::transport::Info, hevaa::transport::Node::create(hevaa::transport::Row{str}));
                 emit transmitData(hm);
