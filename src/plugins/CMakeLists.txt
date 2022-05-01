@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.11)
 
 project(plugins)
 
+set(CMAKE_AUTOMOC ON)
+
 function(set_plugin_dir target)
     set(PLUGIN_DIR "plugins")
     set_target_properties(${target} PROPERTIES
@@ -13,8 +15,6 @@ function(set_plugin_dir target)
         RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE}/${PLUGIN_DIR}"
     )
 endfunction()
-
-set(CMAKE_AUTOMOC ON)
 
 add_subdirectory(telegramBot)
 add_subdirectory(tinkoffInvest)
