@@ -35,7 +35,7 @@ const hevaa::transport::Node TinkoffComponent::ComponentInfo()
         if (services.count() > 0)
         {
             auto buttons = hevaa::transport::Node::create(services);
-            commands.get()->appendChild(buttons);
+            commands->appendChild(buttons);
         }
     }
     root->appendChild(commands);
@@ -56,16 +56,16 @@ void TinkoffComponent::handleData(const hevaa::transport::message &msg)
             qDebug() << "Sending request to tinkoff...";
 
             ServiceReply reply;
-            QString func = msg.body().get()->data(0).toString();
-            QString srv = msg.body().get()->data(1).toString();
-            if (m_greeter.get()->service(srv).get())
+            QString func = msg.body()->data(0).toString();
+            QString srv = msg.body()->data(1).toString();
+            if (m_greeter->service(srv).get())
             {
-                QMetaObject::invokeMethod(m_greeter.get()->service(srv).get(),
+                QMetaObject::invokeMethod(m_greeter->service(srv).get(),
                                       func.toStdString().c_str(),
                                       Qt::DirectConnection,
                                       Q_RETURN_ARG(ServiceReply, reply)
                                    );
-                QString str = QString::fromStdString(reply.ptr().get()->DebugString());
+                QString str = QString::fromStdString(reply.ptr()->DebugString());
                 qDebug() << "Greeter received:" << str;
                 hevaa::transport::message hm(hevaa::transport::Info, hevaa::transport::Node::create(hevaa::transport::Row{str}));
                 emit transmitData(hm);

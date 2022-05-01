@@ -42,7 +42,7 @@ void DataBaseWriter::handleData(const hevaa::transport::message &msg)
     try {
         if (m_db.isOpen())
         {
-            auto m = msg.body().get()->data(0).toStringList();
+            auto m = msg.body()->data(0).toStringList();
             QSqlQuery query(m_db);
 
             QDateTime timestamp = QDateTime::currentDateTime();

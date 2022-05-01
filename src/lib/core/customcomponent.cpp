@@ -37,7 +37,7 @@ void CustomComponent::handleData(const hevaa::transport::message &msg)
 {
     if (msg.type() == hevaa::transport::HandshakeAnswer)
     {
-        qDebug() << objectName() << "was connected to" << msg.body().get()->data(0).toString();
+        qDebug() << objectName() << "was connected to" << msg.body()->data(0).toString();
     }
     if (msg.type() == hevaa::transport::HandshakeQuery)
     {

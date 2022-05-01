@@ -13,17 +13,17 @@ void TelegramBot::createMenu(hevaa::transport::Node menuInfo)
     for (int i = 0; i < currentnode->childCount(); i++)
     {
         auto currentchild = currentnode->child(i);
-        for (int command_index = 0; command_index < currentchild.get()->columnCount(); command_index++)
+        for (int command_index = 0; command_index < currentchild->columnCount(); command_index++)
         {
-            if (currentchild.get()->data(command_index).toStringList().count() > 1)
+            if (currentchild->data(command_index).toStringList().count() > 1)
             {
                 BotCommand::Ptr cmdArray(new BotCommand);
-                auto vCommand = currentchild.get()->data(command_index).toStringList().at(0).toStdString();
-                auto vDescription = currentchild.get()->data(command_index).toStringList().at(1).toStdString();
+                auto vCommand = currentchild->data(command_index).toStringList().at(0).toStdString();
+                auto vDescription = currentchild->data(command_index).toStringList().at(1).toStdString();
                 cmdArray->command = vCommand;
                 cmdArray->description = vDescription;
                 commands.push_back(cmdArray);
-                auto buttons = currentchild.get()->child(command_index);
+                auto buttons = currentchild->child(command_index);
                 if (buttons)
                 {
                     auto keyboard = createButtoms(buttons);
@@ -44,16 +44,16 @@ InlineKeyboardMarkup::Ptr TelegramBot::createButtoms(hevaa::transport::Node butt
 {
     InlineKeyboardMarkup::Ptr keyboard(new InlineKeyboardMarkup);
     std::vector<InlineKeyboardButton::Ptr> row;
-    for (int button_index = 0; button_index < buttomInfo.get()->columnCount(); button_index++)
+    for (int button_index = 0; button_index < buttomInfo->columnCount(); button_index++)
     {
         InlineKeyboardButton::Ptr SandBoxButton(new InlineKeyboardButton);
-        auto vButtonText = buttomInfo.get()->data(button_index).toStringList()[0];
-        auto vSrv = buttomInfo.get()->data(button_index).toStringList()[1];
+        auto vButtonText = buttomInfo->data(button_index).toStringList()[0];
+        auto vSrv = buttomInfo->data(button_index).toStringList()[1];
         auto vCallbackData = vSrv + vButtonText;
         SandBoxButton->text = vButtonText.toStdString();
         SandBoxButton->callbackData = vCallbackData.toStdString();
         row.push_back(SandBoxButton);
-        if (button_index % 2 || button_index == buttomInfo.get()->columnCount() - 1)
+        if (button_index % 2 || button_index == buttomInfo->columnCount() - 1)
         {
             keyboard->inlineKeyboard.push_back(row);
             row.clear();
@@ -78,7 +78,7 @@ TelegramBot::TelegramBot(AppSettins plugin_settings): CustomComponent(plugin_set
     token.append(m_plugin_settings["TGPASS"].toStdString());
     m_bot = QSharedPointer<Bot>::create(token);
     m_longPollsExecutor = QSharedPointer<LongPollsExecuter>::create(m_bot);
-    m_longPollsExecutor.get()->moveToThread(&m_longPollsThread);
+    m_longPollsExecutor->moveToThread(&m_longPollsThread);
     connect(&m_longPollsThread, &QThread::started, m_longPollsExecutor.get(), &LongPollsExecuter::execute, Qt::QueuedConnection);
     connect(&m_longPollsThread, &QThread::started, [](){ qDebug() << "longPollsThread send signal started!"; });
     m_longPollsThread.start();
@@ -100,7 +100,7 @@ void TelegramBot::handleData(const hevaa::transport::message &msg)
         createMenu(msg.body());
     }
     if (msg.body() && m_chatid) {
-        m_bot->getApi().sendMessage(m_chatid, msg.body().get()->data(0).toString().toStdString());
+        m_bot->getApi().sendMessage(m_chatid, msg.body()->data(0).toString().toStdString());
    }
 }
 
