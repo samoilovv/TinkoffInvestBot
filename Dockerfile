@@ -1,7 +1,5 @@
 FROM ubuntu
 
-RUN echo "hello world"
-
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt update 
