@@ -81,7 +81,7 @@ ALTER TABLE public.he_raw OWNER TO postgres;
 -- Name: TABLE he_raw; Type: COMMENT; Schema: public; Owner: postgres
 --
 
-COMMENT ON TABLE public.he_raw IS 'Сырые данные';
+COMMENT ON TABLE public.he_raw IS 'Raw data';
 
 
 --
@@ -90,7 +90,7 @@ COMMENT ON TABLE public.he_raw IS 'Сырые данные';
 -- Name: COLUMN he_raw.id; Type: COMMENT; Schema: public; Owner: postgres
 --
 
-COMMENT ON COLUMN public.he_raw.id IS 'Идентификатор';
+COMMENT ON COLUMN public.he_raw.id IS 'Identificator';
 
 
 --
@@ -99,7 +99,7 @@ COMMENT ON COLUMN public.he_raw.id IS 'Идентификатор';
 -- Name: COLUMN he_raw.msg_datetime; Type: COMMENT; Schema: public; Owner: postgres
 --
 
-COMMENT ON COLUMN public.he_raw.msg_datetime IS 'Время получения сырого сообщения';
+COMMENT ON COLUMN public.he_raw.msg_datetime IS 'Receive time a raw message';
 
 
 --
@@ -108,7 +108,7 @@ COMMENT ON COLUMN public.he_raw.msg_datetime IS 'Время получения �
 -- Name: COLUMN he_raw.raw_msg; Type: COMMENT; Schema: public; Owner: postgres
 --
 
-COMMENT ON COLUMN public.he_raw.raw_msg IS 'Сырое сообщение';
+COMMENT ON COLUMN public.he_raw.raw_msg IS 'Raw message';
 
 
 --
@@ -117,7 +117,7 @@ COMMENT ON COLUMN public.he_raw.raw_msg IS 'Сырое сообщение';
 -- Name: COLUMN he_raw.user_name; Type: COMMENT; Schema: public; Owner: postgres
 --
 
-COMMENT ON COLUMN public.he_raw.user_name IS 'Имя пользователя';
+COMMENT ON COLUMN public.he_raw.user_name IS 'User name';
 
 
 --
