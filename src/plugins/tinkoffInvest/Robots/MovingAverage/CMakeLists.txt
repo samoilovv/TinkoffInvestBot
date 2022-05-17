@@ -1,13 +1,13 @@
 cmake_minimum_required(VERSION 3.11)
 
-project(tinkoffInvestPlugin)
+project(movingAverage)
 
 find_package(Qt5 REQUIRED COMPONENTS Core)
 
 add_library(${PROJECT_NAME} MODULE
-    tinkoffInvestConsts.h
-    tinkoffInvestPlugin.h
-    tinkoffInvestPlugin.cpp
+    movingAverageConsts.h
+    movingAveragePlugin.h
+    movingAveragePlugin.cpp
 )
 
 generate_export_header(${PROJECT_NAME})
@@ -27,10 +27,9 @@ target_link_libraries(${PROJECT_NAME}
     TinkoffInvestSDK
     )
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/TinkoffInvestSDK)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/TinkoffInvestSDK/services)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../TinkoffInvestSDK)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../TinkoffInvestSDK/services)
 
 set_plugin_dir(${PROJECT_NAME})
 
-add_subdirectory(TinkoffInvestSDK)
-add_subdirectory(Robots)
+
