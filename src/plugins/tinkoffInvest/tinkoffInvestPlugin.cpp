@@ -8,15 +8,14 @@
 #include "tinkoffInvestConsts.h"
 #include "customservice.h"
 #include "sandboxservice.h"
-#include "servicereply.h"
+#include "commontypes.h"
 
 using namespace hevaa;
 
 TinkoffComponent::TinkoffComponent(AppSettins &plugin_settings): CustomComponent(plugin_settings)
 {
-    qRegisterMetaType<ServiceReply>();
     setObjectName(COMPONENT_NAME_TINKOFF);
-    m_greeter = QSharedPointer<InvestApiClient>::create(m_plugin_settings["TINKHOST"], m_plugin_settings["TINKPASS"]);
+    m_client = QSharedPointer<InvestApiClient>::create(m_plugin_settings["TINKHOST"].toStdString(), m_plugin_settings["TINKPASS"].toStdString());
 }
 
 TinkoffComponent::~TinkoffComponent()
@@ -31,21 +30,21 @@ const hevaa::transport::Node TinkoffComponent::ComponentInfo()
     auto commands = hevaa::transport::Node::create(TINKOFF_SERVISES);
     for (int i = 0; i < TINKOFF_SERVISES.count(); i++)
     {
-        auto services = getServicesList(m_greeter, TINKOFF_SERVISES[i].toStringList()[0]);
-        if (services.count() > 0)
-        {
-            auto buttons = hevaa::transport::Node::create(services);
-            commands->appendChild(buttons);
-        }
+//        auto services = getServicesList(m_client, TINKOFF_SERVISES[i].toStringList()[0]);
+//        if (services.count() > 0)
+//        {
+//            auto buttons = hevaa::transport::Node::create(services);
+//            commands->appendChild(buttons);
+//        }
     }
     root->appendChild(commands);
     return root;
 }
 
-hevaa::transport::Row TinkoffComponent::getServicesList(const QSharedPointer<InvestApiClient> iap, const QString &prefix)
-{
-    return iap ? iap->getServiceMethods(prefix) : hevaa::transport::Row({});
-}
+//hevaa::transport::Row TinkoffComponent::getServicesList(const QSharedPointer<InvestApiClient> iap, const QString &prefix)
+//{
+//    return iap ? iap->getServiceMethods(prefix) : hevaa::transport::Row({});
+//}
 
 void TinkoffComponent::handleData(const hevaa::transport::message &msg)
 {
@@ -58,13 +57,15 @@ void TinkoffComponent::handleData(const hevaa::transport::message &msg)
             ServiceReply reply;
             QString func = msg.body()->data(0).toString();
             QString srv = msg.body()->data(1).toString();
-            if (m_greeter->service(srv).get())
+            if (m_client->service(srv.toStdString()).get())
             {
-                QMetaObject::invokeMethod(m_greeter->service(srv).get(),
-                                      func.toStdString().c_str(),
-                                      Qt::DirectConnection,
-                                      Q_RETURN_ARG(ServiceReply, reply)
-                                   );
+
+//                QMetaObject::invokeMethod(m_greeter->service(srv.toStdString()).get(),
+//                                      func.toStdString().c_str(),
+//                                      Qt::DirectConnection,
+//                                      Q_RETURN_ARG(ServiceReply, reply)
+//                                   );
+
                 QString str = QString::fromStdString(reply.ptr()->DebugString());
                 qDebug() << "Greeter received:" << str;
                 hevaa::transport::message hm(hevaa::transport::Info, hevaa::transport::Node::create(hevaa::transport::Row{str}));
