@@ -5,7 +5,6 @@
 #include <QSharedPointer>
 #include <QSettings>
 #include "hevaa_consts.h"
-#include "hidestring.h"
 #include "customcomponent.h"
 #include "imoduleplugin.h"
 #include "pluginsloader.h"
@@ -23,8 +22,8 @@ PluginsLoader::PluginsLoader(QString password, QObject *parent) :
 {
     if (loadSettings()) {
         loadModules();
-        //connectModules(hevaa::MODULE_NAME_TELEGRAM, hevaa::MODULE_NAME_DATABASE);
-        //connectModules(hevaa::MODULE_NAME_DATABASE, hevaa::MODULE_NAME_TELEGRAM);
+//        connectModules(hevaa::MODULE_NAME_TELEGRAM, hevaa::MODULE_NAME_DATABASE);
+//        connectModules(hevaa::MODULE_NAME_DATABASE, hevaa::MODULE_NAME_TELEGRAM);
         connectModules(hevaa::MODULE_NAME_TINKOFF, hevaa::MODULE_NAME_TELEGRAM);
         connectModules(hevaa::MODULE_NAME_TELEGRAM, hevaa::MODULE_NAME_TINKOFF);
         startModules();
@@ -51,8 +50,7 @@ bool PluginsLoader::loadSettings()
 {
     QString SettingsFillPath = c_SettingsFile;
     QSettings settings(SettingsFillPath, QSettings::IniFormat);
-    uint i = settings.value("count").toUInt();
-    m_isSettingsOk = i == defCount;
+    m_isSettingsOk = true;
     for(auto hs_key : m_app_settings.keys())
     {
         if (settings.value(hs_key).isNull())
@@ -60,7 +58,6 @@ bool PluginsLoader::loadSettings()
             m_isSettingsOk = false;
             qDebug() << "Не установлена переменная окружения" << hs_key;
         }
-        hs_key.contains(alphaConst::qPrefix, Qt::CaseInsensitive) ? m_app_settings[hs_key] = codeDecode(settings.value(hs_key).toString(), m_password) : m_app_settings[hs_key] = settings.value(hs_key).toString();
     }
     return m_isSettingsOk;
 }
@@ -97,22 +94,8 @@ void PluginsLoader::startModules()
 void PluginsLoader::saveSettings()
 {
     QString fullFileName = c_SettingsFile;
-    if (QFileInfo(fullFileName).exists())
+    if (!QFileInfo(fullFileName).exists())
     {
-        QSettings settings(fullFileName, QSettings::IniFormat);
-        if (settings.value("count").toUInt() != defCount){
-            qInfo() << "Файл настроек будет закодирован...";
-            settings.setValue("count", defCount);
-            QStringList childKeys = settings.childKeys();
-            foreach (const QString &childKey, childKeys)
-            {
-                if (childKey.contains(alphaConst::qPrefix, Qt::CaseInsensitive))
-                {
-                    settings.setValue(childKey, codeDecode(settings.value(childKey).toString(), m_password));
-                }
-            }
-        }
-    } else {
         qInfo() << "Файл" << fullFileName << "не найден. Создается новый файл настроек.";
         QSettings settings(fullFileName, QSettings::IniFormat);
         uint i = 1;
