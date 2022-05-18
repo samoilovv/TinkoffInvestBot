@@ -26,13 +26,11 @@ int main(int argc, char *argv[])
     HevaaApplication app(argc, &argv);
     QCommandLineParser parser;
     parser.setSingleDashWordOptionMode(QCommandLineParser::ParseAsLongOptions);
-    parser.setApplicationDescription("Telegram Bot for TinkoffInvest");
+    parser.setApplicationDescription("Robot manager for TinkoffInvest");
     parser.addHelpOption();
     parser.addVersionOption();
-    parser.addPositionalArgument("password", "Password used to encrypt and decrypt the settings");
     parser.process(app);
 
-    const QStringList args(parser.positionalArguments());
-    args.size() < 2 ? app.init() : app.init(args.at(1));
+    app.init();
     return app.exec();
 }

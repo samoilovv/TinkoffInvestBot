@@ -13,13 +13,6 @@ using namespace  hevaa;
 
 PluginsLoader::PluginsLoader(QObject *parent) : QObject(parent)
 {
-
-}
-
-PluginsLoader::PluginsLoader(QString password, QObject *parent) :
-    QObject(parent),
-    m_password(password)
-{
     if (loadSettings()) {
         loadModules();
 //        connectModules(hevaa::MODULE_NAME_TELEGRAM, hevaa::MODULE_NAME_DATABASE);
@@ -56,7 +49,8 @@ bool PluginsLoader::loadSettings()
         if (settings.value(hs_key).isNull())
         {
             m_isSettingsOk = false;
-            qDebug() << "Не установлена переменная окружения" << hs_key;
+            qDebug() << "Parameter not set" << hs_key;
+            m_app_settings[hs_key] = settings.value(hs_key).toString();
         }
     }
     return m_isSettingsOk;
@@ -96,10 +90,8 @@ void PluginsLoader::saveSettings()
     QString fullFileName = c_SettingsFile;
     if (!QFileInfo(fullFileName).exists())
     {
-        qInfo() << "Файл" << fullFileName << "не найден. Создается новый файл настроек.";
+        qInfo() << "File" << fullFileName << "not found. Creating new settings file.";
         QSettings settings(fullFileName, QSettings::IniFormat);
-        uint i = 1;
-        settings.setValue("count", i);
         QMapIterator<QString, QString> it {m_app_settings};
         while(it.hasNext())
         {

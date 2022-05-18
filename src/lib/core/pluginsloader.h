@@ -11,7 +11,6 @@ class PluginsLoader : public QObject
 
 public:
     explicit PluginsLoader(QObject *parent = nullptr);
-    explicit PluginsLoader(QString password, QObject *parent = nullptr);
     ~PluginsLoader();
     bool isSettingsOk();
     ModulesList *modulesList();
