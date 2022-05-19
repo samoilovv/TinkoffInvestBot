@@ -67,20 +67,20 @@ void MovingAverageManager::startModule()
 {
     qDebug() << "The TinkoffManager thread is" << QThread::currentThread();
 
-    m_blankThread.setObjectName(moduleName());
-    m_component->moveToThread(&m_blankThread);
+    m_thread.setObjectName(moduleName());
+    m_component->moveToThread(&m_thread);
 
-    connect(&m_blankThread, &QThread::started, [](){ qDebug() << "tinkoffThread send signal started!"; });
-    connect(&m_blankThread, &QThread::finished, m_component.data(), [](){ qDebug() << "tinkoffThread send signal finished!"; });
+    connect(&m_thread, &QThread::started, [](){ qDebug() << "tinkoffThread send signal started!"; });
+    connect(&m_thread, &QThread::finished, m_component.data(), [](){ qDebug() << "tinkoffThread send signal finished!"; });
 
-    qInfo() << "Starting" << m_blankThread.objectName() << "...";
-    m_blankThread.start();
+    qInfo() << "Starting" << m_thread.objectName() << "...";
+    m_thread.start();
 }
 
 void MovingAverageManager::stopModule()
 {
-    m_blankThread.requestInterruption();
-    m_blankThread.quit();
-    m_blankThread.wait();
+    m_thread.requestInterruption();
+    m_thread.quit();
+    m_thread.wait();
 }
 

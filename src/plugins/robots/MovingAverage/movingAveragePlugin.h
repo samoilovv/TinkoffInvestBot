@@ -46,7 +46,7 @@ public:
     void stopModule() override;
 
 private:
-    QThread m_blankThread;
+    QThread m_thread;
     QSharedPointer<MovingAverage> m_component;
 };
 
