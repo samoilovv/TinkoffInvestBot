@@ -4,6 +4,7 @@
 #include <QPluginLoader>
 #include <QSharedPointer>
 #include <QSettings>
+#include <QString>
 #include "hevaa_consts.h"
 #include "hidestring.h"
 #include "customcomponent.h"
@@ -29,6 +30,7 @@ PluginsLoader::PluginsLoader(QString password, bool encode, QObject *parent) :
         connectModules(hevaa::MODULE_NAME_TELEGRAM, hevaa::MODULE_NAME_TINKOFF);
         startModules();
 
+        //QObject::connect(this, &PluginsLoader::sendMainMenuInfo, m_tgbot, &CustomComponent::handleData);
 
     }
 }
@@ -87,7 +89,7 @@ void PluginsLoader::connectModules(const QString &sender, const QString &recipie
 void PluginsLoader::startModules()
 {
     foreach (QObject * value, m_modules) {
-        auto module = qobject_cast<hevaa::IModulePlugin * >(value);
+        auto module = qobject_cast<hevaa::IModulePlugin *>(value);
         if (module) {
             module->startModule();
         }
@@ -141,14 +143,11 @@ void PluginsLoader::loadModules()
     for (const QString &fileName : entryList) {
         QPluginLoader loader(pluginsDir.absoluteFilePath(fileName));
         auto plugin = loader.instance();
-
-        if (plugin->objectName() == MODULE_NAME_TELEGRAM)
-        {
-//            m_tgbot = plugin;
-            qDebug() << "!!!!!!!!!!!!!!!!!------------_!!!!!!!!!!!!!!1";
-        }
-
         auto module = qobject_cast<hevaa::IModulePlugin *>(plugin);
+        if (QString::compare(plugin->metaObject()->className(), "TelegramManager", Qt::CaseInsensitive))
+        {
+            m_tgbot = module;
+        }
         if (module) {
             qDebug() << "Plugin" << module->moduleName() << "is loaded";
             module->initModule(m_app_settings);

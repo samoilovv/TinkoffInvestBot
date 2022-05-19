@@ -53,6 +53,7 @@ public slots:
 class TelegramManager: public QObject, public hevaa::IModulePlugin
 {
     Q_OBJECT
+    Q_CLASSINFO("TelegramBot", "Telegram telegram to control your robots.")
     Q_PLUGIN_METADATA(IID "ru.Hevaa.TelegramPlugin.1.0" FILE "telegramPlugin.json")
     Q_INTERFACES(
             hevaa::IModulePlugin

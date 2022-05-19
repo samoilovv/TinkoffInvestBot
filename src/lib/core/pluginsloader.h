@@ -2,8 +2,9 @@
 #define PLUGINSLOADER_H
 
 #include <QObject>
-
 #include "hevaa_common.h"
+#include "hevaa_message.h"
+#include "imoduleplugin.h"
 
 class PluginsLoader : public QObject
 {
@@ -32,7 +33,8 @@ private:
     bool m_isSettingsOk {true};
     ModulesList m_modules;
     QStringList m_robots;
-    QSharedPointer<QObject> m_tgbot;
+//    QObject *m_tgbot;
+    hevaa::IModulePlugin *m_tgbot;
     bool loadSettings();
     void loadModules();
     void loadRobots();
@@ -40,6 +42,10 @@ private:
     void startModules();
     void stopModules();
     void saveSettings(bool encode = false);
+
+signals:
+    void sendMainMenuInfo(const hevaa::transport::message &);
+
 };
 
 #endif // PLUGINSLOADER_H
