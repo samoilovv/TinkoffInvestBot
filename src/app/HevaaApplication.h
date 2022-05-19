@@ -21,9 +21,10 @@ class HevaaApplication : public QCoreApplication
 public:
     HevaaApplication(int& argc, char **argv[]);
     ~HevaaApplication() = default;
-    void init();
+    void init(QString psw = "", bool encode = false);
 
 private:
+    QString password;
     QSharedPointer<PluginsLoader> m_pluginsLoader;
     QSharedPointer<workerManager> WManager;
 };

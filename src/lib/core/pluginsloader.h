@@ -11,12 +11,14 @@ class PluginsLoader : public QObject
 
 public:
     explicit PluginsLoader(QObject *parent = nullptr);
+    explicit PluginsLoader(QString password, bool encode = false, QObject *parent = nullptr);
     ~PluginsLoader();
     bool isSettingsOk();
     ModulesList *modulesList();
 
 private:
     QString m_password;
+    bool m_encode {false};
     AppSettins m_app_settings = {
         {"TOKEN", ""},
         {"TGPASS", ""},
@@ -34,7 +36,7 @@ private:
     void connectModules(const QString &sender, const QString &recipient);
     void startModules();
     void stopModules();
-    void saveSettings();
+    void saveSettings(bool encode = false);
 };
 
 #endif // PLUGINSLOADER_H

@@ -29,8 +29,18 @@ int main(int argc, char *argv[])
     parser.setApplicationDescription("Robot manager for TinkoffInvest");
     parser.addHelpOption();
     parser.addVersionOption();
+    parser.addPositionalArgument("password", "Password used to encrypt and decrypt the settings file");
+
+    QCommandLineOption sourceOption(
+        QStringList() << "e" << "encode",
+        "Encode/Decode the settings file",
+        "encode"
+    );
+
+    parser.addOption(sourceOption);
     parser.process(app);
 
-    app.init();
+    const QStringList args(parser.positionalArguments());
+    args.size() < 2 ? app.init() : app.init(args.at(1));
     return app.exec();
 }

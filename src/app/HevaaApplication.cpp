@@ -8,12 +8,13 @@ HevaaApplication::HevaaApplication(int& argc, char **argv[]) : QCoreApplication 
     setApplicationVersion(QString("%1").arg(MY_VERSION));
 }
 
-void HevaaApplication::init()
+void HevaaApplication::init(QString psw, bool encode)
 {
+    password = psw;
     qDebug() << "The main thread is" << QThread::currentThread();
     this->setObjectName(applicationName());
 
-    m_pluginsLoader = QSharedPointer<PluginsLoader>::create();
+    m_pluginsLoader = QSharedPointer<PluginsLoader>::create(password, encode);
     if (m_pluginsLoader->isSettingsOk())
     {
         qDebug() << "Settings is Ok";

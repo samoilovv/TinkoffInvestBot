@@ -5,6 +5,7 @@
 #include <QSharedPointer>
 #include <QSettings>
 #include "hevaa_consts.h"
+#include "hidestring.h"
 #include "customcomponent.h"
 #include "imoduleplugin.h"
 #include "pluginsloader.h"
@@ -13,10 +14,17 @@ using namespace  hevaa;
 
 PluginsLoader::PluginsLoader(QObject *parent) : QObject(parent)
 {
+
+}
+
+PluginsLoader::PluginsLoader(QString password, bool encode, QObject *parent) :
+    QObject(parent),
+    m_password(password), m_encode(encode)
+{
     if (loadSettings()) {
         loadModules();
-//        connectModules(hevaa::MODULE_NAME_TELEGRAM, hevaa::MODULE_NAME_DATABASE);
-//        connectModules(hevaa::MODULE_NAME_DATABASE, hevaa::MODULE_NAME_TELEGRAM);
+        //connectModules(hevaa::MODULE_NAME_TELEGRAM, hevaa::MODULE_NAME_DATABASE);
+        //connectModules(hevaa::MODULE_NAME_DATABASE, hevaa::MODULE_NAME_TELEGRAM);
         connectModules(hevaa::MODULE_NAME_TINKOFF, hevaa::MODULE_NAME_TELEGRAM);
         connectModules(hevaa::MODULE_NAME_TELEGRAM, hevaa::MODULE_NAME_TINKOFF);
         startModules();
@@ -26,7 +34,7 @@ PluginsLoader::PluginsLoader(QObject *parent) : QObject(parent)
 PluginsLoader::~PluginsLoader()
 {
     stopModules();
-    saveSettings();
+    saveSettings(m_encode);
 }
 
 bool PluginsLoader::isSettingsOk()
@@ -43,15 +51,14 @@ bool PluginsLoader::loadSettings()
 {
     QString SettingsFillPath = c_SettingsFile;
     QSettings settings(SettingsFillPath, QSettings::IniFormat);
-    m_isSettingsOk = true;
     for(auto hs_key : m_app_settings.keys())
     {
         if (settings.value(hs_key).isNull())
         {
             m_isSettingsOk = false;
-            qDebug() << "Parameter not set" << hs_key;
-            m_app_settings[hs_key] = settings.value(hs_key).toString();
+            qDebug() << "Не установлена переменная окружения" << hs_key;
         }
+        hs_key.contains(alphaConst::qPrefix, Qt::CaseInsensitive) ? m_app_settings[hs_key] = codeDecode(settings.value(hs_key).toString(), m_password) : m_app_settings[hs_key] = settings.value(hs_key).toString();
     }
     return m_isSettingsOk;
 }
@@ -85,12 +92,26 @@ void PluginsLoader::startModules()
     }
 }
 
-void PluginsLoader::saveSettings()
+void PluginsLoader::saveSettings(bool encode)
 {
     QString fullFileName = c_SettingsFile;
-    if (!QFileInfo(fullFileName).exists())
+    if (QFileInfo(fullFileName).exists())
     {
-        qInfo() << "File" << fullFileName << "not found. Creating new settings file.";
+        QSettings settings(fullFileName, QSettings::IniFormat);
+        if (!m_password.isEmpty() && encode)
+        {
+            qInfo() << "Settings file will be encoded...";
+            QStringList childKeys = settings.childKeys();
+            foreach (const QString &childKey, childKeys)
+            {
+                if (childKey.contains(alphaConst::qPrefix, Qt::CaseInsensitive))
+                {
+                    settings.setValue(childKey, codeDecode(settings.value(childKey).toString(), m_password));
+                }
+            }
+        }
+    } else {
+        qInfo() << "File" << fullFileName << "not found. Creating a new settings file...";
         QSettings settings(fullFileName, QSettings::IniFormat);
         QMapIterator<QString, QString> it {m_app_settings};
         while(it.hasNext())

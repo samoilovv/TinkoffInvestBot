@@ -8,7 +8,6 @@ namespace hevaa {
     static const QString APP_UNIQUE_SEMAPHORE = "Hevaa unique sync name";
     static const QString APP_UNIQUE_NAME = "Hevaa unique single apllication name";
 
-    static const int defCount = 6;
     static const QString c_SettingsFile {"settings.ini"};
 
     static const QString MODULE_NAME_TELEGRAM      = QLatin1String("telegramBotModule");
