@@ -41,11 +41,6 @@ const hevaa::transport::Node TinkoffComponent::ComponentInfo()
     return root;
 }
 
-//hevaa::transport::Row TinkoffComponent::getServicesList(const QSharedPointer<InvestApiClient> iap, const QString &prefix)
-//{
-//    return iap ? iap->getServiceMethods(prefix) : hevaa::transport::Row({});
-//}
-
 void TinkoffComponent::handleData(const hevaa::transport::message &msg)
 {
     CustomComponent::handleData(msg);
@@ -92,12 +87,12 @@ QString TinkoffManager::moduleName() const
 
 QSharedPointer<CustomComponent> TinkoffManager::getComponent() const
 {
-    return m_blankComponent;
+    return m_component;
 }
 
 void TinkoffManager::initModule(AppSettins &plugin_settings)
 {
-    m_blankComponent = QSharedPointer<TinkoffComponent>::create(plugin_settings);
+    m_component = QSharedPointer<TinkoffComponent>::create(plugin_settings);
 }
 
 void TinkoffManager::startModule()
@@ -105,10 +100,10 @@ void TinkoffManager::startModule()
     qDebug() << "The TinkoffManager thread is" << QThread::currentThread();
 
     m_blankThread.setObjectName(moduleName());
-    m_blankComponent->moveToThread(&m_blankThread);
+    m_component->moveToThread(&m_blankThread);
 
     connect(&m_blankThread, &QThread::started, [](){ qDebug() << "tinkoffThread send signal started!"; });
-    connect(&m_blankThread, &QThread::finished, m_blankComponent.data(), [](){ qDebug() << "tinkoffThread send signal finished!"; });
+    connect(&m_blankThread, &QThread::finished, m_component.data(), [](){ qDebug() << "tinkoffThread send signal finished!"; });
 
     qInfo() << "Starting" << m_blankThread.objectName() << "...";
     m_blankThread.start();

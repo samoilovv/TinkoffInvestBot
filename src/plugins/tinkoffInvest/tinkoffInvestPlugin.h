@@ -1,5 +1,5 @@
-#ifndef BLANKPLUGIN_H
-#define BLANKPLUGIN_H
+#ifndef TINKOFFINVESTPLUGIN_H
+#define TINKOFFINVESTPLUGIN_H
 
 #include <QThread>
 #include <QSharedPointer>
@@ -30,7 +30,7 @@ public slots:
 class TinkoffManager: public QObject, public hevaa::IModulePlugin
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID "ru.Hevaa.BlankPlugin.1.0" FILE "tinkoffInvestPlugin.json")
+    Q_PLUGIN_METADATA(IID "ru.Hevaa.TinkoffInvestPlugin.1.0" FILE "tinkoffInvestPlugin.json")
     Q_INTERFACES(
             hevaa::IModulePlugin
             )
@@ -47,7 +47,7 @@ public:
 
 private:
     QThread m_blankThread;
-    QSharedPointer<TinkoffComponent> m_blankComponent;
+    QSharedPointer<TinkoffComponent> m_component;
 };
 
-#endif // BLANKPLUGIN_H
+#endif // TINKOFFINVESTPLUGIN_H
