@@ -31,7 +31,8 @@ private:
     };
     bool m_isSettingsOk {true};
     ModulesList m_modules;
-    QStringList m_modulesList;
+    QStringList m_robots;
+    QSharedPointer<QObject> m_tgbot;
     bool loadSettings();
     void loadModules();
     void loadRobots();

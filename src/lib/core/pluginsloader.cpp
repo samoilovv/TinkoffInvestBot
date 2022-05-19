@@ -141,12 +141,18 @@ void PluginsLoader::loadModules()
     for (const QString &fileName : entryList) {
         QPluginLoader loader(pluginsDir.absoluteFilePath(fileName));
         auto plugin = loader.instance();
+
+        if (plugin->objectName() == MODULE_NAME_TELEGRAM)
+        {
+//            m_tgbot = plugin;
+            qDebug() << "!!!!!!!!!!!!!!!!!------------_!!!!!!!!!!!!!!1";
+        }
+
         auto module = qobject_cast<hevaa::IModulePlugin *>(plugin);
         if (module) {
             qDebug() << "Plugin" << module->moduleName() << "is loaded";
             module->initModule(m_app_settings);
             m_modules.insert(module->moduleName(), plugin);
-            m_modulesList.append(module->moduleName());
         }
     }
 }
@@ -162,8 +168,7 @@ void PluginsLoader::loadRobots()
         if (module) {
             qDebug() << "Robot" << module->moduleName() << "is loaded";
             module->initModule(m_app_settings);
-            m_modules.insert(module->moduleName(), plugin);
-            m_modulesList.append(module->moduleName());
+            m_robots.append(module->moduleName());
         }
     }
 }

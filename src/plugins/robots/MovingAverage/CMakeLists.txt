@@ -5,7 +5,6 @@ project(movingAverage)
 find_package(Qt5 REQUIRED COMPONENTS Core)
 
 add_library(${PROJECT_NAME} MODULE
-    movingAverageConsts.h
     movingAveragePlugin.h
     movingAveragePlugin.cpp
 )
