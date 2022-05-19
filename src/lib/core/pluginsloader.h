@@ -14,7 +14,7 @@ public:
     explicit PluginsLoader(QString password, bool encode = false, QObject *parent = nullptr);
     ~PluginsLoader();
     bool isSettingsOk();
-    ModulesList *modulesList();
+    ModulesList *modules();
 
 private:
     QString m_password;
@@ -30,7 +30,7 @@ private:
         {"TINKPASS", ""},
     };
     bool m_isSettingsOk {true};
-    ModulesList m_modules_list;
+    ModulesList m_modules;
     bool loadSettings();
     void loadModules();
     void connectModules(const QString &sender, const QString &recipient);

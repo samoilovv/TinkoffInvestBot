@@ -42,9 +42,9 @@ bool PluginsLoader::isSettingsOk()
     return m_isSettingsOk;
 }
 
-ModulesList *PluginsLoader::modulesList()
+ModulesList *PluginsLoader::modules()
 {
-    return &m_modules_list;
+    return &m_modules;
 }
 
 bool PluginsLoader::loadSettings()
@@ -65,8 +65,8 @@ bool PluginsLoader::loadSettings()
 
 void PluginsLoader::connectModules(const QString &sender, const QString &recipient)
 {
-    hevaa::IModulePlugin *senderModule = qobject_cast<hevaa::IModulePlugin *>(m_modules_list[sender]);
-    hevaa::IModulePlugin *recipientModule = qobject_cast<hevaa::IModulePlugin *>(m_modules_list[recipient]);
+    hevaa::IModulePlugin *senderModule = qobject_cast<hevaa::IModulePlugin *>(m_modules[sender]);
+    hevaa::IModulePlugin *recipientModule = qobject_cast<hevaa::IModulePlugin *>(m_modules[recipient]);
 
     if ((senderModule) && (recipientModule)) {
         auto sender = senderModule->getComponent();
@@ -84,7 +84,7 @@ void PluginsLoader::connectModules(const QString &sender, const QString &recipie
 
 void PluginsLoader::startModules()
 {
-    foreach (QObject * value, m_modules_list) {
+    foreach (QObject * value, m_modules) {
         auto module = qobject_cast<hevaa::IModulePlugin * >(value);
         if (module) {
             module->startModule();
@@ -124,7 +124,7 @@ void PluginsLoader::saveSettings(bool encode)
 
 void PluginsLoader::stopModules()
 {
-    foreach (QObject * value, m_modules_list) {
+    foreach (QObject * value, m_modules) {
         auto module = qobject_cast<hevaa::IModulePlugin * >(value);
         if (module) {
             module->stopModule();
@@ -143,7 +143,7 @@ void PluginsLoader::loadModules()
         if (module) {
             qDebug() << "Plugin" << module->moduleName() << "is loaded";
             module->initModule(m_app_settings);
-            m_modules_list.insert(module->moduleName(), plugin);
+            m_modules.insert(module->moduleName(), plugin);
         }
     }
 }
