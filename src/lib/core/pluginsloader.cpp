@@ -28,6 +28,8 @@ PluginsLoader::PluginsLoader(QString password, bool encode, QObject *parent) :
         connectModules(hevaa::MODULE_NAME_TINKOFF, hevaa::MODULE_NAME_TELEGRAM);
         connectModules(hevaa::MODULE_NAME_TELEGRAM, hevaa::MODULE_NAME_TINKOFF);
         startModules();
+
+
     }
 }
 
@@ -144,6 +146,24 @@ void PluginsLoader::loadModules()
             qDebug() << "Plugin" << module->moduleName() << "is loaded";
             module->initModule(m_app_settings);
             m_modules.insert(module->moduleName(), plugin);
+            m_modulesList.append(module->moduleName());
+        }
+    }
+}
+
+void PluginsLoader::loadRobots()
+{
+    QDir pluginsDir = QDir(QCoreApplication::applicationDirPath() + "/robots");
+    const auto entryList = pluginsDir.entryList(QDir::Files);
+    for (const QString &fileName : entryList) {
+        QPluginLoader loader(pluginsDir.absoluteFilePath(fileName));
+        auto plugin = loader.instance();
+        auto module = qobject_cast<hevaa::IModulePlugin *>(plugin);
+        if (module) {
+            qDebug() << "Robot" << module->moduleName() << "is loaded";
+            module->initModule(m_app_settings);
+            m_modules.insert(module->moduleName(), plugin);
+            m_modulesList.append(module->moduleName());
         }
     }
 }

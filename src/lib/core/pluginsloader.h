@@ -31,8 +31,10 @@ private:
     };
     bool m_isSettingsOk {true};
     ModulesList m_modules;
+    QStringList m_modulesList;
     bool loadSettings();
     void loadModules();
+    void loadRobots();
     void connectModules(const QString &sender, const QString &recipient);
     void startModules();
     void stopModules();

@@ -26,5 +26,5 @@ target_link_libraries(${PROJECT_NAME}
     TgBot
     )
 
-set_plugin_dir(${PROJECT_NAME})
+set_plugins_dir(${PROJECT_NAME})
 
