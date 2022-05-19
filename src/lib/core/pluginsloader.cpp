@@ -56,7 +56,7 @@ bool PluginsLoader::loadSettings()
         if (settings.value(hs_key).isNull())
         {
             m_isSettingsOk = false;
-            qDebug() << "Не установлена переменная окружения" << hs_key;
+            qDebug() << "Parameter is not set" << hs_key;
         }
         hs_key.contains(alphaConst::qPrefix, Qt::CaseInsensitive) ? m_app_settings[hs_key] = codeDecode(settings.value(hs_key).toString(), m_password) : m_app_settings[hs_key] = settings.value(hs_key).toString();
     }
