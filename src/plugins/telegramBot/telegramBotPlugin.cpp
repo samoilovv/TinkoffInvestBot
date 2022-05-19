@@ -7,7 +7,7 @@
 
 void TelegramBot::createMenu(hevaa::transport::Node menuInfo)
 {
-    //команды и обработка команд
+    //commands
     std::vector<BotCommand::Ptr> commands;
     auto currentnode = menuInfo.get();
     for (int i = 0; i < currentnode->childCount(); i++)
@@ -115,7 +115,7 @@ void TelegramBot::slotDoWork()
         m_bot->getApi().sendMessage(m_chatid, "TinkoffInvestBot is started");
     });
 
-    //передавать сообщения в бд
+    //send message to database
     m_bot->getEvents().onAnyMessage([this/*, &keyboard*/](Message::Ptr message) {
 
         qInfo() << QString("User %2 wrote %1").arg(message->text.c_str()).arg(message->from->firstName.c_str());
@@ -128,7 +128,7 @@ void TelegramBot::slotDoWork()
     //            auto keyboard = createButtoms(nullptr);
     //            m_bot->getApi().sendMessage(m_chatid, "Your message is: " + message->text, false,  0, keyboard, "MarkdownV2");
 
-        //запись в БД
+        //write to db
         QStringList sl;
         sl << QString::fromStdString(message->from->username) << QString::fromStdString(message->text);
         hevaa::transport::message hm(hevaa::transport::Info, hevaa::transport::Node::create(hevaa::transport::Row({sl})));

@@ -29,7 +29,7 @@ private:
         {"TINKHOST", ""},
         {"TINKPASS", ""},
     };
-    bool m_isSettingsOk {false};
+    bool m_isSettingsOk {true};
     ModulesList m_modules_list;
     bool loadSettings();
     void loadModules();
