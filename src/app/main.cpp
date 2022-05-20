@@ -30,14 +30,9 @@ int main(int argc, char *argv[])
     parser.addHelpOption();
     parser.addVersionOption();
     parser.addPositionalArgument("password", "Password used to encrypt and decrypt the settings file");
-
-    QCommandLineOption encodeOption(
-        QStringList() << "e" << "encode"
-    );
-
+    QCommandLineOption encodeOption(QStringList() << "e" << "encode");
     parser.addOption(encodeOption);
     parser.process(app);
-
     const QStringList args(parser.positionalArguments());
     args.size() < 1 ? app.init() : app.init(args.at(0), parser.isSet(encodeOption));
     return app.exec();
