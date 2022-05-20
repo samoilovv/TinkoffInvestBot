@@ -23,7 +23,7 @@ PluginsLoader::PluginsLoader(QString password, bool encode, QObject *parent) :
     QObject(parent),
     m_password(password), m_encode(encode)
 {
-    if (loadSettings())
+    if (!encode && loadSettings())
     {
         loadModules();
         loadRobots();
@@ -46,7 +46,7 @@ PluginsLoader::~PluginsLoader()
 
 bool PluginsLoader::isSettingsOk()
 {
-    return m_isSettingsOk;
+    return !m_encode && m_isSettingsOk;
 }
 
 ModulesList *PluginsLoader::modules()
