@@ -92,17 +92,21 @@ TelegramBot::~TelegramBot()
     m_longPollsThread.wait();
 }
 
-void TelegramBot::handleData(const hevaa::transport::message &msg)
+void TelegramBot::init(const hevaa::transport::message &msg)
 {
-    CustomComponent::handleData(msg);
     if (msg.type() == hevaa::transport::Info)
     {
         createMenu(msg.body());
     }
-    if (msg.type() == hevaa::transport::HandshakeAnswer)
-    {
-        createMenu(msg.body());
-    }
+}
+
+void TelegramBot::handleData(const hevaa::transport::message &msg)
+{
+    CustomComponent::handleData(msg);
+//    if (msg.type() == hevaa::transport::HandshakeAnswer)
+//    {
+//        createMenu(msg.body());
+//    }
     if (msg.body() && m_chatid) {
         m_bot->getApi().sendMessage(m_chatid, msg.body()->data(0).toString().toStdString());
    }

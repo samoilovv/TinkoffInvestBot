@@ -32,11 +32,6 @@ CustomComponent::CustomComponent(const AppSettins &plugin_settings, QObject *par
     m_timerId = startTimer(1000);
 }
 
-void CustomComponent::init(const hevaa::transport::message &msg)
-{
-
-}
-
 void CustomComponent::handleData(const hevaa::transport::message &msg)
 {
     if (msg.type() == hevaa::transport::HandshakeAnswer)

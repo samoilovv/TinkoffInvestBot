@@ -29,11 +29,6 @@ const hevaa::transport::Node MovingAverage::ComponentInfo()
     return root;
 }
 
-void MovingAverage::init(const transport::message &msg)
-{
-
-}
-
 void MovingAverage::handleData(const hevaa::transport::message &msg)
 {
     CustomComponent::handleData(msg);

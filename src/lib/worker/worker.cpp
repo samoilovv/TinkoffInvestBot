@@ -23,7 +23,6 @@ void MyWorker::setNextValue()
             emit finished();
             return;
         }
-        //заполнить логгер
         emit valueChanged(--m_nValue);
         qInfo() << m_nValue;
     }
@@ -40,14 +39,13 @@ std::unique_ptr<T> make_unique(Args&&... args) {
 workerManager::workerManager(QObject * _owner, int _count)
 {
     m_worker = make_unique<MyWorker>(_count);
-    m_workerThread.setObjectName("WorkerThread");
-    m_worker->moveToThread(&m_workerThread);
-    connect(&m_workerThread, SIGNAL(started()), m_worker.get(), SLOT(slotDoWork()));
-    connect(m_worker.get(), SIGNAL(finished()), &m_workerThread, SLOT(quit()));
-    //выйти из программы после завершения потока workerThread
-    connect(&m_workerThread, SIGNAL(finished()), _owner, SLOT(quit()));
+    m_thread.setObjectName("WorkerThread");
+    m_worker->moveToThread(&m_thread);
+    connect(&m_thread, SIGNAL(started()), m_worker.get(), SLOT(slotDoWork()));
+    connect(m_worker.get(), SIGNAL(finished()), &m_thread, SLOT(quit()));
+    connect(&m_thread, SIGNAL(finished()), _owner, SLOT(quit()));
     qInfo() << "Application " << _owner->objectName() << "will be closed after" << _count << "seconds";
-    m_workerThread.start();
+    m_thread.start();
 }
 
 

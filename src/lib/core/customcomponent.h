@@ -38,7 +38,7 @@ signals:
 
 public slots:
     /// Первоначальная инициализация компонента
-    virtual void init(const hevaa::transport::message &msg);
+    virtual void init(const hevaa::transport::message &msg) = 0;
     /// Прием сообщений от других модулей программы
     virtual void handleData(const hevaa::transport::message &msg);
 

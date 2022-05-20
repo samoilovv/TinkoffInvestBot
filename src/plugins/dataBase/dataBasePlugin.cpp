@@ -35,11 +35,6 @@ DataBaseWriter::~DataBaseWriter()
     m_db.close();
 }
 
-void DataBaseWriter::init(const transport::message &msg)
-{
-
-}
-
 void DataBaseWriter::handleData(const hevaa::transport::message &msg)
 {
     CustomComponent::handleData(msg);

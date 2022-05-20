@@ -34,7 +34,7 @@ public:
     ~workerManager() = default;
 
 private:
-    QThread m_workerThread;
+    QThread m_thread;
     std::unique_ptr<MyWorker> m_worker;
 
 };
