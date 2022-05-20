@@ -8,6 +8,9 @@ namespace hevaa
     namespace transport
     {
 
+        /*!
+            \brief Базовая структура данных для передачи внутренних сообщений
+        */
         class TreeItem
         {
         public:

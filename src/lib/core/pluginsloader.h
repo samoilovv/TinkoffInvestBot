@@ -6,6 +6,13 @@
 #include "hevaa_message.h"
 #include "imoduleplugin.h"
 
+/*!
+    \brief Загрузчик плагинов
+
+    Находит совместимые плагины и роботы в специальных каталогах, загружает и запускает из работу.
+    Также отвечает за чтение и сохранение настроек программы. Если в конструкторе класса передать
+    пароль и включить флаг encode, то все пароли в файле настроек будут закодированы.
+*/
 class PluginsLoader : public QObject
 {
     Q_OBJECT
@@ -14,8 +21,12 @@ public:
     explicit PluginsLoader(QObject *parent = nullptr);
     explicit PluginsLoader(QString password, bool encode = false, QObject *parent = nullptr);
     ~PluginsLoader();
+    /// Проверка корректности файла настроек
     bool isSettingsOk();
+    /// Список подключенных модулей программы
     ModulesList *modules();
+    /// Список подключенных роботов
+    QStringList *robots();
 
 private:
     QString m_password;
@@ -33,8 +44,7 @@ private:
     bool m_isSettingsOk {true};
     ModulesList m_modules;
     QStringList m_robots;
-//    QObject *m_tgbot;
-    hevaa::IModulePlugin *m_tgbot;
+    QSharedPointer<CustomComponent> m_tgbot;
     bool loadSettings();
     void loadModules();
     void loadRobots();
@@ -44,6 +54,7 @@ private:
     void saveSettings(bool encode = false);
 
 signals:
+    /// Отправить всю необходимую информацию для формирования главного меню
     void sendMainMenuInfo(const hevaa::transport::message &);
 
 };

@@ -5,8 +5,8 @@
 
 namespace hevaa {
 
-    static const QString APP_UNIQUE_SEMAPHORE = "Hevaa unique sync name";
-    static const QString APP_UNIQUE_NAME = "Hevaa unique single apllication name";
+    static const QString APP_UNIQUE_SEMAPHORE = "Hevaa unique sema name";
+    static const QString APP_UNIQUE_NAME = "Hevaa unique apllication name";
 
     static const QString c_SettingsFile {"settings.ini"};
 

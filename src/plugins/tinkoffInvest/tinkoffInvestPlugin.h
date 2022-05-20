@@ -23,6 +23,7 @@ private:
     //hevaa::transport::Row getServicesList(const QSharedPointer<InvestApiClient> iap, const QString &prefix = 0);
 
 public slots:
+    void init(const hevaa::transport::message &msg) final;
     void handleData(const hevaa::transport::message &msg) final;
 
 };

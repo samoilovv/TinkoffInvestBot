@@ -10,10 +10,9 @@ const hevaa::transport::Node CustomComponent::ComponentInfo()
 
 void CustomComponent::timerEvent(QTimerEvent *)
 {
-    //отправить хэндшейк
     static const QMetaMethod transmitDataSignal = QMetaMethod::fromSignal(&CustomComponent::transmitData);
     if (isSignalConnected(transmitDataSignal)) {
-        qDebug() << objectName() << "stop timer and is trying to connect...";
+        qDebug() << objectName() << "Stop timer and is trying to connect...";
         killTimer(m_timerId);
         hevaa::transport::message msg(hevaa::transport::HandshakeQuery);
         emit transmitData(msg);
@@ -31,6 +30,11 @@ CustomComponent::CustomComponent(const AppSettins &plugin_settings, QObject *par
 {
     qRegisterMetaType<hevaa::transport::message>();
     m_timerId = startTimer(1000);
+}
+
+void CustomComponent::init(const hevaa::transport::message &msg)
+{
+
 }
 
 void CustomComponent::handleData(const hevaa::transport::message &msg)

@@ -7,7 +7,7 @@
 
 void TelegramBot::createMenu(hevaa::transport::Node menuInfo)
 {
-    //commands
+    //create menu commands
     std::vector<BotCommand::Ptr> commands;
     auto currentnode = menuInfo.get();
     for (int i = 0; i < currentnode->childCount(); i++)
@@ -95,6 +95,10 @@ TelegramBot::~TelegramBot()
 void TelegramBot::handleData(const hevaa::transport::message &msg)
 {
     CustomComponent::handleData(msg);
+    if (msg.type() == hevaa::transport::Info)
+    {
+        createMenu(msg.body());
+    }
     if (msg.type() == hevaa::transport::HandshakeAnswer)
     {
         createMenu(msg.body());

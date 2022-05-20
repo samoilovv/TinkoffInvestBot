@@ -19,6 +19,7 @@ public:
     ~DataBaseWriter();
 
 public:
+    void init(const hevaa::transport::message &msg) final;
     void handleData(const hevaa::transport::message &msg) final;
 
 };

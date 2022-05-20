@@ -5,7 +5,6 @@
 #include "hevaa_transport.h"
 #include "hevaa_tree.h"
 #include "movingAveragePlugin.h"
-#include "movingAverageConsts.h"
 #include "customservice.h"
 #include "sandboxservice.h"
 #include "commontypes.h"
@@ -28,6 +27,11 @@ const hevaa::transport::Node MovingAverage::ComponentInfo()
     hevaa::transport::Row rootdata = {objectName()};
     auto root = hevaa::transport::Node::create(rootdata);
     return root;
+}
+
+void MovingAverage::init(const transport::message &msg)
+{
+
 }
 
 void MovingAverage::handleData(const hevaa::transport::message &msg)

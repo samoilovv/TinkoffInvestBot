@@ -1,6 +1,7 @@
 #include <QDebug>
 #include <QDir>
 #include <QCoreApplication>
+#include <QMetaMethod>
 #include <QPluginLoader>
 #include <QSharedPointer>
 #include <QSettings>
@@ -24,13 +25,18 @@ PluginsLoader::PluginsLoader(QString password, bool encode, QObject *parent) :
 {
     if (loadSettings()) {
         loadModules();
+        loadRobots();
         //connectModules(hevaa::MODULE_NAME_TELEGRAM, hevaa::MODULE_NAME_DATABASE);
         //connectModules(hevaa::MODULE_NAME_DATABASE, hevaa::MODULE_NAME_TELEGRAM);
         connectModules(hevaa::MODULE_NAME_TINKOFF, hevaa::MODULE_NAME_TELEGRAM);
         connectModules(hevaa::MODULE_NAME_TELEGRAM, hevaa::MODULE_NAME_TINKOFF);
         startModules();
+        QObject::connect(this, &PluginsLoader::sendMainMenuInfo, m_tgbot.get(), &CustomComponent::handleData);
 
-        //QObject::connect(this, &PluginsLoader::sendMainMenuInfo, m_tgbot, &CustomComponent::handleData);
+        hevaa::transport::message hm(hevaa::transport::Info, hevaa::transport::Node::create(hevaa::transport::Row{m_robots}));
+//        emit(hm);
+        QMetaObject::invokeMethod(m_tgbot.get(), "handleData", Qt::DirectConnection,
+                                  Q_ARG(hevaa::transport::message, hm));
 
     }
 }
@@ -49,6 +55,11 @@ bool PluginsLoader::isSettingsOk()
 ModulesList *PluginsLoader::modules()
 {
     return &m_modules;
+}
+
+QStringList *PluginsLoader::robots()
+{
+    return &m_robots;
 }
 
 bool PluginsLoader::loadSettings()
@@ -146,7 +157,7 @@ void PluginsLoader::loadModules()
         auto module = qobject_cast<hevaa::IModulePlugin *>(plugin);
         if (QString::compare(plugin->metaObject()->className(), "TelegramManager", Qt::CaseInsensitive))
         {
-            m_tgbot = module;
+            m_tgbot = module->getComponent();
         }
         if (module) {
             qDebug() << "Plugin" << module->moduleName() << "is loaded";
