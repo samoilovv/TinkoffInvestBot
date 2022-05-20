@@ -7,6 +7,9 @@
 #include "customcomponent.h"
 #include "investapiclient.h"
 
+/*!
+    \brief Простой торговый робот
+*/
 class SimpleRobot : public CustomComponent
 {
     Q_OBJECT
@@ -19,15 +22,15 @@ protected:
     const hevaa::transport::Node ComponentInfo() final;
     QSharedPointer<InvestApiClient> m_client;
 
-private:
-    //hevaa::transport::Row getServicesList(const QSharedPointer<InvestApiClient> iap, const QString &prefix = 0);
-
 public slots:
     void init(const hevaa::transport::message &msg) final;
     void handleData(const hevaa::transport::message &msg) final;
 
 };
 
+/*!
+    \brief Менеджер простого торгового робота
+*/
 class SimpleRobotManager: public QObject, public hevaa::IModulePlugin
 {
     Q_OBJECT
@@ -50,6 +53,7 @@ public:
 private:
     QThread m_thread;
     QSharedPointer<SimpleRobot> m_component;
+
 };
 
 #endif // SIMPLEROBOTPLUGIN_H

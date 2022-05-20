@@ -4,7 +4,7 @@
 #include <QCoreApplication>
 #include <QSharedPointer>
 #include "pluginsloader.h"
-#include "worker.h"
+#include "stopper.h"
 #include "hevaa_common.h"
 
 /*!
@@ -26,7 +26,7 @@ public:
 private:
     QString password;
     QSharedPointer<PluginsLoader> m_pluginsLoader;
-    QSharedPointer<workerManager> WManager;
+    QSharedPointer<stopperManager> WManager;
 };
 
 #endif // MAIN_HEVAAAPPLICATION_H

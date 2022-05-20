@@ -7,6 +7,9 @@
 #include "customcomponent.h"
 #include "investapiclient.h"
 
+/*!
+    \brief Клиент сервисов Тинькофф Инвестиций
+*/
 class TinkoffComponent : public CustomComponent
 {
 Q_OBJECT
@@ -19,15 +22,18 @@ protected:
     const hevaa::transport::Node ComponentInfo() final;
     QSharedPointer<InvestApiClient> m_client;
 
-private:
-    //hevaa::transport::Row getServicesList(const QSharedPointer<InvestApiClient> iap, const QString &prefix = 0);
-
 public slots:
     void init(const hevaa::transport::message &msg) final;
     void handleData(const hevaa::transport::message &msg) final;
 
 };
 
+/*!
+    \brief Менеджер Тинькофф Инвестиций
+
+    Позволяет управлять счетами, открывать и закрывать позиции,
+    запрашивать и анализировать различную торговую информацию и т.д.
+*/
 class TinkoffManager: public QObject, public hevaa::IModulePlugin
 {
     Q_OBJECT

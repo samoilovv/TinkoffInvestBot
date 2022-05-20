@@ -4,6 +4,8 @@ project(plugins)
 
 set(CMAKE_AUTOMOC ON)
 
+include(GenerateExportHeader)
+
 function(set_robots_dir target)
     set(ROBOTS_DIR "robots")
     set_target_properties(${target} PROPERTIES

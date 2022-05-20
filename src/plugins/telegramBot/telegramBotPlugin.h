@@ -11,6 +11,11 @@
 
 using namespace TgBot;
 
+/*!
+    \brief Класс, поддерживающий соединение с сервером Телеграм-мессенджера
+
+    Постоянное соединение с сервером Телеграма поддерживается при помощи "длинных опросов".
+*/
 class LongPollsExecuter: public QObject
 {
 Q_OBJECT
@@ -26,6 +31,9 @@ private:
 
 };
 
+/*!
+    \brief Телеграм бот, управляющий счетами и роботами
+*/
 class TelegramBot: public CustomComponent
 {
 Q_OBJECT
@@ -51,6 +59,9 @@ public slots:
 
 };
 
+/*!
+    \brief Менеджер телеграм бота
+*/
 class TelegramManager: public QObject, public hevaa::IModulePlugin
 {
     Q_OBJECT

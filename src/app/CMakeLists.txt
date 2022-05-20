@@ -49,7 +49,7 @@ target_link_libraries(${PROJECT_NAME}
     Qt5::Core
     hevaa::interfaces
     hevaa::core
-    Worker
+    Stopper
     )
 
 add_dependencies(${PROJECT_NAME} git_version)

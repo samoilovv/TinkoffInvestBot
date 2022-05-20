@@ -11,7 +11,6 @@ HevaaApplication::HevaaApplication(int& argc, char **argv[]) : QCoreApplication 
 void HevaaApplication::init(QString psw, bool encode)
 {
     password = psw;
-    qDebug() << "The main thread is" << QThread::currentThread();
     this->setObjectName(applicationName());
 
     m_pluginsLoader = QSharedPointer<PluginsLoader>::create(password, encode);
@@ -27,8 +26,7 @@ void HevaaApplication::init(QString psw, bool encode)
         });
     } else {
         qDebug() << "Settings is not Ok. More details in log file.";
-        quit();
-//        WManager = QSharedPointer<workerManager>::create(this);
+        WManager = QSharedPointer<stopperManager>::create(this);
     }
 }
 

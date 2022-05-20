@@ -7,6 +7,9 @@
 #include "imoduleplugin.h"
 #include "customcomponent.h"
 
+/*!
+    \brief Провайдер базы данных
+*/
 class DataBaseWriter: public CustomComponent
 {
 Q_OBJECT
@@ -24,6 +27,9 @@ public:
 
 };
 
+/*!
+    \brief Менеджер базы данных
+*/
 class DataBaseManager: public QObject, public hevaa::IModulePlugin
 {
     Q_OBJECT

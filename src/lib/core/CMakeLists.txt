@@ -15,8 +15,6 @@ add_library(${PROJECT_NAME} SHARED ${TARGET_PRIVATE_SRC} ${TARGET_HDR})
 
 add_library(hevaa::core ALIAS ${PROJECT_NAME})
 
-generate_export_header(${PROJECT_NAME})
-
 target_include_directories(${PROJECT_NAME}
     PUBLIC
         ${CMAKE_CURRENT_BINARY_DIR}
