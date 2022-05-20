@@ -42,7 +42,7 @@ stopperManager::stopperManager(QObject *_owner, int _count)
     m_stopper->moveToThread(&m_thread);
     connect(&m_thread, SIGNAL(started()), m_stopper.get(), SLOT(slotDoWork()));
     connect(m_stopper.get(), SIGNAL(finished()), &m_thread, SLOT(quit()));
-    connect(&m_stopper, SIGNAL(finished()), _owner, SLOT(quit()));
+    connect(&m_thread, SIGNAL(finished()), _owner, SLOT(quit()));
     qInfo() << "Application " << _owner->objectName() << "will be closed after" << _count << "seconds";
     m_thread.start();
 }
