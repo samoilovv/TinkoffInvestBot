@@ -15,5 +15,3 @@ _deps
 setenv.sh
 settings.ini
 *.autosave
-log/
-config/
