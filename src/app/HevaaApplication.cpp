@@ -27,7 +27,8 @@ void HevaaApplication::init(QString psw, bool encode)
         });
     } else {
         qDebug() << "Settings is not Ok. More details in log file.";
-        WManager = QSharedPointer<workerManager>::create(this);
+        quit();
+//        WManager = QSharedPointer<workerManager>::create(this);
     }
 }
 
