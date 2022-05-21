@@ -28,17 +28,22 @@ const hevaa::transport::Node TinkoffComponent::ComponentInfo()
     hevaa::transport::Row rootdata = {objectName()};
     auto root = hevaa::transport::Node::create(rootdata);
     auto commands = hevaa::transport::Node::create(TINKOFF_SERVISES);
-    for (int i = 0; i < TINKOFF_SERVISES.count(); i++)
-    {
+//    for (int i = 0; i < TINKOFF_SERVISES.count(); i++)
+//    {
 //        auto services = getServicesList(m_client, TINKOFF_SERVISES[i].toStringList()[0]);
 //        if (services.count() > 0)
 //        {
 //            auto buttons = hevaa::transport::Node::create(services);
 //            commands->appendChild(buttons);
 //        }
-    }
+//    }
     root->appendChild(commands);
     return root;
+}
+
+void TinkoffComponent::init(const transport::message &msg)
+{
+
 }
 
 void TinkoffComponent::handleData(const hevaa::transport::message &msg)
@@ -61,10 +66,10 @@ void TinkoffComponent::handleData(const hevaa::transport::message &msg)
 //                                      Q_RETURN_ARG(ServiceReply, reply)
 //                                   );
 
-                QString str = QString::fromStdString(reply.ptr()->DebugString());
-                qDebug() << "Received message:" << str;
-                hevaa::transport::message hm(hevaa::transport::Info, hevaa::transport::Node::create(hevaa::transport::Row{str}));
-                emit transmitData(hm);
+//                QString str = QString::fromStdString(reply.ptr()->DebugString());
+//                qDebug() << "Received message:" << str;
+//                hevaa::transport::message hm(hevaa::transport::Info, hevaa::transport::Node::create(hevaa::transport::Row{str}));
+//                emit transmitData(hm);
             } else
             {
                 qDebug() << "There is no such service:" << srv;
