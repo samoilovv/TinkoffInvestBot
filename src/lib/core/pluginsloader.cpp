@@ -51,9 +51,6 @@ PluginsLoader::PluginsLoader(QString password, bool encode, QObject *parent) :
 
         hevaa::transport::message hm(hevaa::transport::Info, hevaa::transport::Node::create(hevaa::transport::Row{m_robots}));
 
-
-
-
         QMetaObject::invokeMethod(m_tgbot.data(), "init", Qt::DirectConnection,
                                   Q_ARG(hevaa::transport::message, hm));
     }
@@ -174,15 +171,10 @@ void PluginsLoader::loadModules()
         auto plugin = loader.instance();
         auto module = qobject_cast<hevaa::IModulePlugin *>(plugin);
         if (module) {
-            QString str1 = plugin->metaObject()->className();
-            qDebug() << str1;
-
-            QString str2("TelegramManager");
-
             qDebug() << "Plugin" << module->moduleName() << "is loaded";
             module->initModule(m_app_settings);
 
-            if (QString::compare(str1, str2, Qt::CaseInsensitive) == 0)
+            if (QString::compare(plugin->metaObject()->className(), "TelegramManager", Qt::CaseInsensitive) == 0)
             {
                   m_tgbot = module->getComponent();
             }
