@@ -193,7 +193,10 @@ void PluginsLoader::loadRobots()
         if (module) {
             qDebug() << "Robot" << module->moduleName() << "is loaded";
             module->initModule(m_app_settings);
-            m_robots.append(module->moduleName());
+            bool hasClassInfo = plugin->metaObject()->classInfoCount() > 1;
+            QString robotname = hasClassInfo ? plugin->metaObject()->classInfo(0).value() : plugin->metaObject()->className();
+            QString robotcaption = hasClassInfo ? plugin->metaObject()->classInfo(1).value() : plugin->metaObject()->className();
+            m_robots.append(QStringList({robotname, robotcaption}));
         }
     }
 }
