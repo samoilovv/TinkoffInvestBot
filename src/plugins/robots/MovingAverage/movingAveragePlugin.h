@@ -19,9 +19,6 @@ protected:
     const hevaa::transport::Node ComponentInfo() final;
     QSharedPointer<InvestApiClient> m_client;
 
-private:
-    //hevaa::transport::Row getServicesList(const QSharedPointer<InvestApiClient> iap, const QString &prefix = 0);
-
 public slots:
     void init(const hevaa::transport::message &msg) final;
     void handleData(const hevaa::transport::message &msg) final;
@@ -31,7 +28,8 @@ public slots:
 class MovingAverageManager: public QObject, public hevaa::IModulePlugin
 {
     Q_OBJECT
-    Q_CLASSINFO("MovingAverage", "MovingAverage Robot")
+    Q_CLASSINFO("name", "movingaverage")
+    Q_CLASSINFO("caption", "MovingAverage Robot")
     Q_PLUGIN_METADATA(IID "ru.Hevaa.MovingAveragePlugin.1.0" FILE "movingAveragePlugin.json")
     Q_INTERFACES(
             hevaa::IModulePlugin
