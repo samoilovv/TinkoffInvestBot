@@ -13,7 +13,7 @@ namespace hevaa {
         virtual ~IModulePlugin() {}
         virtual QString moduleName() const = 0;
         virtual QSharedPointer<CustomComponent> getComponent() const = 0;
-        virtual void initModule(AppSettins &plugin_settings) {Q_UNUSED(plugin_settings)};
+        virtual void initModule(AppSettins &plugin_settings) {Q_UNUSED(plugin_settings)}
         virtual void startModule() {}
         virtual void stopModule() {}
     };

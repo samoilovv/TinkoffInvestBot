@@ -26,7 +26,7 @@ public:
     /// Список подключенных модулей программы
     ModulesList *modules();
     /// Список подключенных роботов
-    QStringList *robots();
+    hevaa::transport::Row *robots();
 
 private:
     QString m_password;
@@ -43,7 +43,7 @@ private:
     };
     bool m_isSettingsOk {true};
     ModulesList m_modules;
-    QStringList m_robots;
+    hevaa::transport::Row m_robots;
     QSharedPointer<CustomComponent> m_tgbot;
     bool loadSettings();
     void loadModules();

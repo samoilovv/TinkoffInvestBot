@@ -56,6 +56,7 @@ public slots:
     void init(const hevaa::transport::message &msg) final;
     void handleData(const hevaa::transport::message &msg) final;
     void slotDoWork();
+    void test();
 
 };
 

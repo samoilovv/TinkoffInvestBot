@@ -32,8 +32,29 @@ PluginsLoader::PluginsLoader(QString password, bool encode, QObject *parent) :
         connectModules(hevaa::MODULE_NAME_TINKOFF, hevaa::MODULE_NAME_TELEGRAM);
         connectModules(hevaa::MODULE_NAME_TELEGRAM, hevaa::MODULE_NAME_TINKOFF);
         startModules();
+
+
+//        auto root = hevaa::transport::Node::create(rootdata);
+//        auto commands = hevaa::transport::Node::create(TINKOFF_SERVISES);
+//        for (int i = 0; i < TINKOFF_SERVISES.count(); i++)
+//        {
+//            auto services = getServicesList(m_client, TINKOFF_SERVISES[i].toStringList()[0]);
+//            if (services.count() > 0)
+//            {
+//                auto buttons = hevaa::transport::Node::create(services);
+//                commands->appendChild(buttons);
+//            }
+//        }
+//        root->appendChild(commands);
+
+
+
         hevaa::transport::message hm(hevaa::transport::Info, hevaa::transport::Node::create(hevaa::transport::Row{m_robots}));
-        QMetaObject::invokeMethod(m_tgbot.get(), "init", Qt::DirectConnection,
+
+
+
+
+        QMetaObject::invokeMethod(m_tgbot.data(), "init", Qt::DirectConnection,
                                   Q_ARG(hevaa::transport::message, hm));
     }
 }
@@ -54,7 +75,7 @@ ModulesList *PluginsLoader::modules()
     return &m_modules;
 }
 
-QStringList *PluginsLoader::robots()
+hevaa::transport::Row *PluginsLoader::robots()
 {
     return &m_robots;
 }
@@ -136,7 +157,7 @@ void PluginsLoader::saveSettings(bool encode)
 
 void PluginsLoader::stopModules()
 {
-    foreach (QObject * value, m_modules) {
+    foreach (QObject *value, m_modules) {
         auto module = qobject_cast<hevaa::IModulePlugin * >(value);
         if (module) {
             module->stopModule();
@@ -153,12 +174,18 @@ void PluginsLoader::loadModules()
         auto plugin = loader.instance();
         auto module = qobject_cast<hevaa::IModulePlugin *>(plugin);
         if (module) {
-            if (QString::compare(plugin->metaObject()->className(), "TelegramManager", Qt::CaseInsensitive))
-            {
-                m_tgbot = module->getComponent();
-            }
+            QString str1 = plugin->metaObject()->className();
+            qDebug() << str1;
+
+            QString str2("TelegramManager");
+
             qDebug() << "Plugin" << module->moduleName() << "is loaded";
             module->initModule(m_app_settings);
+
+            if (QString::compare(str1, str2, Qt::CaseInsensitive) == 0)
+            {
+                  m_tgbot = module->getComponent();
+            }
             m_modules.insert(module->moduleName(), plugin);
         }
     }
