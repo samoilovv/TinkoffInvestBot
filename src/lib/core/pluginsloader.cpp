@@ -173,8 +173,7 @@ void PluginsLoader::loadModules()
         if (module) {
             qDebug() << "Plugin" << module->moduleName() << "is loaded";
             module->initModule(m_app_settings);
-
-            if (QString::compare(plugin->metaObject()->className(), "TelegramManager", Qt::CaseInsensitive) == 0)
+            if (QString::compare(module->moduleName(), COMPONENT_NAME_TELEGRAM, Qt::CaseInsensitive) == 0)
             {
                   m_tgbot = module->getComponent();
             }
