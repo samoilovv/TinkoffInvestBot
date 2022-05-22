@@ -107,9 +107,6 @@ void TinkoffManager::startModule()
     m_thread.setObjectName(moduleName());
     m_component->moveToThread(&m_thread);
 
-    connect(&m_thread, &QThread::started, [](){ qDebug() << "tinkoffThread send signal started!"; });
-    connect(&m_thread, &QThread::finished, m_component.data(), [](){ qDebug() << "tinkoffThread send signal finished!"; });
-
     qInfo() << "Starting" << m_thread.objectName() << "...";
     m_thread.start();
 }

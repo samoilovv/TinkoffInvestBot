@@ -33,23 +33,18 @@ PluginsLoader::PluginsLoader(QString password, bool encode, QObject *parent) :
         connectModules(hevaa::MODULE_NAME_TELEGRAM, hevaa::MODULE_NAME_TINKOFF);
         startModules();
 
+        hevaa::transport::Row rootdata = {objectName()};
+        auto root = hevaa::transport::Node::create(rootdata);
+        auto commands = hevaa::transport::Node::create(m_robots);
+        for (int i = 0; i < m_robots.count(); i++)
+        {
+            hevaa::transport::Row services {QString("CommandButton1"), QString("CommandButton2")};
+            auto buttons = hevaa::transport::Node::create(services);
+            commands->appendChild(buttons);
+        }
+        root->appendChild(commands);
 
-//        auto root = hevaa::transport::Node::create(rootdata);
-//        auto commands = hevaa::transport::Node::create(TINKOFF_SERVISES);
-//        for (int i = 0; i < TINKOFF_SERVISES.count(); i++)
-//        {
-//            auto services = getServicesList(m_client, TINKOFF_SERVISES[i].toStringList()[0]);
-//            if (services.count() > 0)
-//            {
-//                auto buttons = hevaa::transport::Node::create(services);
-//                commands->appendChild(buttons);
-//            }
-//        }
-//        root->appendChild(commands);
-
-
-
-        hevaa::transport::message hm(hevaa::transport::Info, hevaa::transport::Node::create(hevaa::transport::Row{m_robots}));
+        hevaa::transport::message hm(hevaa::transport::Info, root);
 
         QMetaObject::invokeMethod(m_tgbot.data(), "init", Qt::DirectConnection,
                                   Q_ARG(hevaa::transport::message, hm));
