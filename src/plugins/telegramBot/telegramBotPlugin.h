@@ -53,7 +53,7 @@ public:
     ~TelegramBot();
 
 public slots:
-    void init(const hevaa::transport::message &msg) final;
+    void init(const hevaa::transport::message &msg);
     void handleData(const hevaa::transport::message &msg) final;
     void slotDoWork();
 

@@ -40,11 +40,6 @@ const hevaa::transport::Node SimpleRobot2Component::ComponentInfo()
     return root;
 }
 
-void SimpleRobot2Component::init(const transport::message &msg)
-{
-
-}
-
 void SimpleRobot2Component::handleData(const hevaa::transport::message &msg)
 {
     CustomComponent::handleData(msg);
@@ -96,7 +91,7 @@ QSharedPointer<CustomComponent> SimpleRobot2Manager::getComponent() const
 
 void SimpleRobot2Manager::initModule(AppSettins &plugin_settings)
 {
-    m_component = QSharedPointer<TinkoffComponent>::create(plugin_settings);
+    m_component = QSharedPointer<SimpleRobot2Component>::create(plugin_settings);
 }
 
 void SimpleRobot2Manager::startModule()

@@ -23,7 +23,6 @@ protected:
     QSharedPointer<InvestApiClient> m_client;
 
 public slots:
-    void init(const hevaa::transport::message &msg) final;
     void handleData(const hevaa::transport::message &msg) final;
 
 };
@@ -37,7 +36,7 @@ public slots:
 class SimpleRobot2Manager: public QObject, public hevaa::IModulePlugin
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID "ru.Hevaa.TinkoffInvestPlugin.1.0" FILE "tinkoffInvestPlugin.json")
+    Q_PLUGIN_METADATA(IID "ru.Hevaa.TinkoffInvestPlugin.1.0" FILE "simpleRobot2Plugin.json")
     Q_INTERFACES(
             hevaa::IModulePlugin
             )
@@ -54,7 +53,7 @@ public:
 
 private:
     QThread m_thread;
-    QSharedPointer<SimpleRobot2Manager> m_component;
+    QSharedPointer<CustomComponent> m_component;
 };
 
 #endif // SIMPLEROBOT2PLUGIN_H

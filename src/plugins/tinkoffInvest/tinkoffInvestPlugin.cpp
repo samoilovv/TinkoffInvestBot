@@ -41,11 +41,6 @@ const hevaa::transport::Node TinkoffComponent::ComponentInfo()
     return root;
 }
 
-void TinkoffComponent::init(const transport::message &msg)
-{
-
-}
-
 void TinkoffComponent::handleData(const hevaa::transport::message &msg)
 {
     CustomComponent::handleData(msg);

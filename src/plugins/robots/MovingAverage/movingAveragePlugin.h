@@ -20,7 +20,6 @@ protected:
     QSharedPointer<InvestApiClient> m_client;
 
 public slots:
-    void init(const hevaa::transport::message &msg) final;
     void handleData(const hevaa::transport::message &msg) final;
 
 };
