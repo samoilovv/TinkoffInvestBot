@@ -34,7 +34,7 @@ class SimpleRobotManager: public QObject, public hevaa::IModulePlugin
 {
     Q_OBJECT
     Q_CLASSINFO("name", "simplerobot")
-    Q_CLASSINFO("caption", "simplerobot")
+    Q_CLASSINFO("caption", "Simple robot")
     Q_PLUGIN_METADATA(IID "ru.Hevaa.SimpleRobotPlugin.1.0" FILE "simpleRobotPlugin.json")
     Q_INTERFACES(
             hevaa::IModulePlugin

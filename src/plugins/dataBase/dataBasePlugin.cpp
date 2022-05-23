@@ -19,9 +19,9 @@ DataBaseWriter::DataBaseWriter(AppSettins &plugin_settings): CustomComponent(plu
         QSqlQuery query(m_db);
         if (m_db.open())
         {
-            qDebug() << "Успешное подключение к базе данных";
+            qDebug() << "Database connection successful";
         } else {
-            qDebug() << "Не удалось подключиться к базе данных";
+            qDebug() << "Failed to connect to database";
         }
     } catch (std::exception& e) {
          qCritical() << QString("error: %1").arg(e.what());
