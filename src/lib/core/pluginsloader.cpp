@@ -38,7 +38,7 @@ PluginsLoader::PluginsLoader(QString password, bool encode, QObject *parent) :
         auto commands = hevaa::transport::Node::create(m_robots);
         for (int i = 0; i < m_robots.count(); i++)
         {
-            hevaa::transport::Row services {QStringList({"command1", "command1"}), QStringList({"command2", "command2"})};
+            hevaa::transport::Row services {QStringList({"start", "command1"}), QStringList({"stop", "command2"})};
             auto buttons = hevaa::transport::Node::create(services);
             commands->appendChild(buttons);
         }
@@ -172,6 +172,10 @@ void PluginsLoader::loadModules()
             {
                   m_tgbot = module->getComponent();
             }
+            if (QString::compare(module->moduleName(), MODULE_NAME_TINKOFF, Qt::CaseInsensitive) == 0)
+            {
+                  m_tinkoffInvest = module->getComponent();
+            }
             m_modules.insert(module->moduleName(), plugin);
         }
     }
@@ -179,6 +183,12 @@ void PluginsLoader::loadModules()
 
 void PluginsLoader::loadRobots()
 {
+    if (m_tinkoffInvest)
+    {
+        QString tinkoffInvestname = "tinkoffinvest";
+        QString tinkoffInvestcaption = "Управление вашими инвестициями";
+        m_robots.append(QStringList({tinkoffInvestname, tinkoffInvestcaption}));
+    }
     QDir pluginsDir = QDir(QCoreApplication::applicationDirPath() + "/robots");
     const auto entryList = pluginsDir.entryList(QDir::Files);
     for (const QString &fileName : entryList) {

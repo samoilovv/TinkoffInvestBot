@@ -44,6 +44,7 @@ private:
     ModulesList m_modules;
     hevaa::transport::Row m_robots;
     QSharedPointer<CustomComponent> m_tgbot;
+    QSharedPointer<CustomComponent> m_tinkoffInvest;
     bool loadSettings();
     void loadModules();
     void loadRobots();
