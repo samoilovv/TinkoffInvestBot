@@ -116,7 +116,6 @@ void TelegramBot::slotDoWork()
 {
     qDebug() << "The TelegramBot thread is" << QThread::currentThread();
 
-
     m_bot->getEvents().onCommand("start", [this](Message::Ptr message) {
         m_chatid = message->chat->id;
         qDebug() << "Chat id:" << m_chatid;
