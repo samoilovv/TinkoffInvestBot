@@ -12,7 +12,7 @@ Tinkoff Invest robot manager
 Для сборки проекта необходимо установить некоторые пакеты. Вы можете сделать это, выполнив следующие команды:
 
 ```sh
-sudo apt-get install g++ make binutils cmake libssl-dev libboost-system-dev zlib1g-dev libcurl4-openssl-dev
+sudo apt-get install g++ make qt5-default binutils cmake libssl-dev libboost-system-dev zlib1g-dev libcurl4-openssl-dev
 ```
 
 ### Сборка
