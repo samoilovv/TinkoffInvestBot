@@ -32,14 +32,13 @@ private:
     QString m_password;
     bool m_encode {false};
     AppSettins m_app_settings = {
-        {"TOKEN", ""},
-        {"TGPASS", ""},
+        {"TGTOKEN", ""},
         {"DBHOST", ""},
         {"DBNAME", ""},
         {"DBUSER", ""},
         {"DBPASS", ""},
         {"TINKHOST", ""},
-        {"TINKPASS", ""},
+        {"TINKTOKEN", ""},
     };
     bool m_isSettingsOk {true};
     ModulesList m_modules;

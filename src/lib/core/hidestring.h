@@ -6,7 +6,7 @@
 /*!
     \brief Строковый тип данных
 
-    Класс, позволяющий спрятать строковые данные внутри бинарных файов программы
+    Класс, позволяющий скрыть строковые данные внутри бинарных файов программы
 */
 class Alpha : public std::string
 {
@@ -49,7 +49,7 @@ QString codeDecode(QString qin, QString qkey = "")
 
 namespace alphaConst {
     Alpha str("");
-    std::string pass = str.c('P').c('A').c('S').c('S');
+    std::string pass = str.c('T').c('O').c('K').c('E').c('N');
     const QString qPrefix(QString::fromStdString(pass));
 }
 

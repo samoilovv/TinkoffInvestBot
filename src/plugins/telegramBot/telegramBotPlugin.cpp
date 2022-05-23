@@ -72,10 +72,7 @@ TelegramBot::TelegramBot(AppSettins plugin_settings): CustomComponent(plugin_set
 {
     setObjectName(hevaa::COMPONENT_NAME_TELEGRAM);
 
-    std::string token;
-    token.append(m_plugin_settings["TOKEN"].toStdString());
-    token.append(":");
-    token.append(m_plugin_settings["TGPASS"].toStdString());
+    std::string token = m_plugin_settings["TGTOKEN"].toStdString();
     m_bot = QSharedPointer<Bot>::create(token);
     m_longPollsExecutor = QSharedPointer<LongPollsExecuter>::create(m_bot);
     m_longPollsExecutor->moveToThread(&m_longPollsThread);
