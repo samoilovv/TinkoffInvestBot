@@ -8,7 +8,7 @@
 #include "investapiclient.h"
 
 /*!
-    \brief Клиент сервисов Тинькофф Инвестиций
+    \brief Пример простого робота
 */
 class SimpleRobot2Component : public CustomComponent
 {
@@ -28,15 +28,14 @@ public slots:
 };
 
 /*!
-    \brief Менеджер Тинькофф Инвестиций
-
-    Позволяет управлять счетами, открывать и закрывать позиции,
-    запрашивать и анализировать различную торговую информацию и т.д.
+    \brief Менеджер простого робота
 */
 class SimpleRobot2Manager: public QObject, public hevaa::IModulePlugin
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID "ru.Hevaa.TinkoffInvestPlugin.1.0" FILE "simpleRobot2Plugin.json")
+    Q_CLASSINFO("name", "simplerobot2")
+    Q_CLASSINFO("caption", "simplerobot2")
+    Q_PLUGIN_METADATA(IID "ru.Hevaa.SimpleRobot2Plugin.1.0" FILE "simpleRobot2Plugin.json")
     Q_INTERFACES(
             hevaa::IModulePlugin
             )

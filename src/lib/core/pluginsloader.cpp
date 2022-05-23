@@ -38,7 +38,7 @@ PluginsLoader::PluginsLoader(QString password, bool encode, QObject *parent) :
         auto commands = hevaa::transport::Node::create(m_robots);
         for (int i = 0; i < m_robots.count(); i++)
         {
-            hevaa::transport::Row services {QString("CommandButton1"), QString("CommandButton2")};
+            hevaa::transport::Row services {QStringList({"command1", "command1"}), QStringList({"command2", "command2"})};
             auto buttons = hevaa::transport::Node::create(services);
             commands->appendChild(buttons);
         }
@@ -168,7 +168,7 @@ void PluginsLoader::loadModules()
         if (module) {
             qDebug() << "Plugin" << module->moduleName() << "is loaded";
             module->initModule(m_app_settings);
-            if (QString::compare(module->moduleName(), COMPONENT_NAME_TELEGRAM, Qt::CaseInsensitive) == 0)
+            if (QString::compare(module->moduleName(), MODULE_NAME_TELEGRAM, Qt::CaseInsensitive) == 0)
             {
                   m_tgbot = module->getComponent();
             }

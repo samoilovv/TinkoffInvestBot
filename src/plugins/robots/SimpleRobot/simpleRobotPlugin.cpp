@@ -13,7 +13,7 @@ using namespace hevaa;
 
 SimpleRobot::SimpleRobot(AppSettins &plugin_settings): CustomComponent(plugin_settings)
 {
-    setObjectName("MovingAverage");
+    setObjectName("SimpleRobot");
     m_client = QSharedPointer<InvestApiClient>::create(m_plugin_settings["TINKHOST"].toStdString(), m_plugin_settings["TINKTOKEN"].toStdString());
 }
 

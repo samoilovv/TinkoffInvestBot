@@ -40,7 +40,7 @@ Q_OBJECT
 
 protected:
     void createMenu(hevaa::transport::Node menuInfo);
-    InlineKeyboardMarkup::Ptr createButtoms(hevaa::transport::Node buttomInfo);
+    InlineKeyboardMarkup::Ptr createButtons(hevaa::transport::Node buttonInfo);
 
 private:
     QSharedPointer<TgBot::Bot> m_bot;
@@ -54,6 +54,7 @@ public:
 
 public slots:
     void init(const hevaa::transport::message &msg);
+    void test();
     void handleData(const hevaa::transport::message &msg) final;
     void slotDoWork();
 

@@ -18,19 +18,19 @@ void TelegramBot::createMenu(hevaa::transport::Node menuInfo)
             if (currentchild->data(command_index).toStringList().count() > 1)
             {
                 BotCommand::Ptr cmdArray(new BotCommand);
-                auto vCommand = currentchild->data(command_index).toStringList().at(0).toStdString();
-                auto vDescription = currentchild->data(command_index).toStringList().at(1).toStdString();
-                cmdArray->command = vCommand;
-                cmdArray->description = vDescription;
+                QString vCommand = currentchild->data(command_index).toStringList().at(0);
+                QString vDescription = currentchild->data(command_index).toStringList().at(1);
+                cmdArray->command = vCommand.toStdString();
+                cmdArray->description = vDescription.toStdString();
                 commands.push_back(cmdArray);
                 auto buttons = currentchild->child(command_index);
                 if (buttons)
                 {
-                    auto keyboard = createButtoms(buttons);
-                    m_bot->getEvents().onCommand(vCommand, [this, keyboard, vDescription](Message::Ptr message) {
+                    auto keyboard = createButtons(buttons);
+                    m_bot->getEvents().onCommand(vCommand.toStdString(), [this, keyboard, vDescription](Message::Ptr message) {
                         m_chatid = message->chat->id;
                         qDebug() << "Chat id:" << m_chatid;
-                        m_bot->getApi().sendMessage(m_chatid, vDescription, false, 0, keyboard, "MarkdownV2");
+                        m_bot->getApi().sendMessage(m_chatid, vDescription.toStdString(), false, 0, keyboard, "MarkdownV2");
                     });
                 }
             }
@@ -40,20 +40,20 @@ void TelegramBot::createMenu(hevaa::transport::Node menuInfo)
     m_bot->getApi().setMyCommands(commands);
 }
 
-InlineKeyboardMarkup::Ptr TelegramBot::createButtoms(hevaa::transport::Node buttomInfo)
+InlineKeyboardMarkup::Ptr TelegramBot::createButtons(hevaa::transport::Node buttonInfo)
 {
     InlineKeyboardMarkup::Ptr keyboard(new InlineKeyboardMarkup);
     std::vector<InlineKeyboardButton::Ptr> row;
-    for (int button_index = 0; button_index < buttomInfo->columnCount(); button_index++)
+    for (int button_index = 0; button_index < buttonInfo->columnCount(); button_index++)
     {
-        InlineKeyboardButton::Ptr SandBoxButton(new InlineKeyboardButton);
-        auto vButtonText = buttomInfo->data(button_index).toStringList()[0];
-        auto vSrv = buttomInfo->data(button_index).toStringList()[1];
+        InlineKeyboardButton::Ptr button(new InlineKeyboardButton);
+        auto vButtonText = buttonInfo->data(button_index).toStringList()[0];
+        auto vSrv = buttonInfo->data(button_index).toStringList()[1];
         auto vCallbackData = vSrv + vButtonText;
-        SandBoxButton->text = vButtonText.toStdString();
-        SandBoxButton->callbackData = vCallbackData.toStdString();
-        row.push_back(SandBoxButton);
-        if (button_index % 2 || button_index == buttomInfo->columnCount() - 1)
+        button->text = vButtonText.toStdString();
+        button->callbackData = vCallbackData.toStdString();
+        row.push_back(button);
+        if (button_index % 2 || button_index == buttonInfo->columnCount() - 1)
         {
             keyboard->inlineKeyboard.push_back(row);
             row.clear();

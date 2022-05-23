@@ -13,7 +13,7 @@ using namespace hevaa;
 
 SimpleRobot2Component::SimpleRobot2Component(AppSettins &plugin_settings): CustomComponent(plugin_settings)
 {
-    setObjectName(COMPONENT_NAME_TINKOFF);
+    setObjectName("Robot2");
     m_client = QSharedPointer<InvestApiClient>::create(m_plugin_settings["TINKHOST"].toStdString(), m_plugin_settings["TINKTOKEN"].toStdString());
 }
 
@@ -26,17 +26,6 @@ const hevaa::transport::Node SimpleRobot2Component::ComponentInfo()
 {
     hevaa::transport::Row rootdata = {objectName()};
     auto root = hevaa::transport::Node::create(rootdata);
-//    auto commands = hevaa::transport::Node::create(TINKOFF_SERVISES);
-//    for (int i = 0; i < TINKOFF_SERVISES.count(); i++)
-//    {
-//        auto services = getServicesList(m_client, TINKOFF_SERVISES[i].toStringList()[0]);
-//        if (services.count() > 0)
-//        {
-//            auto buttons = hevaa::transport::Node::create(services);
-//            commands->appendChild(buttons);
-//        }
-//    }
-//    root->appendChild(commands);
     return root;
 }
 
@@ -81,7 +70,7 @@ SimpleRobot2Manager::~SimpleRobot2Manager()
 
 QString SimpleRobot2Manager::moduleName() const
 {
-    return MODULE_NAME_TINKOFF;
+    return "Robot2";
 }
 
 QSharedPointer<CustomComponent> SimpleRobot2Manager::getComponent() const
