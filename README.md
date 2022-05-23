@@ -40,4 +40,4 @@ make
 
 ## Screenshots
 
-![alt text](example1.jpg "Commands list")
+![alt text](example1.jpg "Commands list")![alt text](example2.jpg "Commands list")
