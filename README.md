@@ -40,4 +40,4 @@ make
 
 ## Скриншоты
 
-![alt text](example1.jpg "Commands list")
+![alt text](example1.png "Commands list")
