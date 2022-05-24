@@ -40,4 +40,4 @@ make
 
 ## Скриншоты
 
-![alt text](example1.jpg "Commands list"){ width="800" height="600" style="display: block; margin: 0 auto" }
+![alt text](example1.jpg "Commands list")
