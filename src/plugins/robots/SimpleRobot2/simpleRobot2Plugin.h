@@ -37,7 +37,7 @@ class SimpleRobot2Manager: public QObject, public hevaa::RobotInterface
     Q_CLASSINFO("caption", "Еще один простой робот")
     Q_PLUGIN_METADATA(IID "ru.Hevaa.SimpleRobot2Plugin.1.0" FILE "simpleRobot2Plugin.json")
     Q_INTERFACES(
-            hevaa::ModuleInterface
+            hevaa::RobotInterface
             )
 
 public:
