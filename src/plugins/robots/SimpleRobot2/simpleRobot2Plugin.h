@@ -3,7 +3,7 @@
 
 #include <QThread>
 #include <QSharedPointer>
-#include "moduleinterface.h"
+#include "robotinterface.h"
 #include "customcomponent.h"
 #include "investapiclient.h"
 
@@ -30,7 +30,7 @@ public slots:
 /*!
     \brief Менеджер простого робота
 */
-class SimpleRobot2Manager: public QObject, public hevaa::ModuleInterface
+class SimpleRobot2Manager: public QObject, public hevaa::RobotInterface
 {
     Q_OBJECT
     Q_CLASSINFO("name", "simplerobot2")
@@ -44,11 +44,11 @@ public:
     explicit SimpleRobot2Manager() = default;
     ~SimpleRobot2Manager();
 
-    QString moduleName() const override;
+    QString robotName() const override;
     QSharedPointer<CustomComponent> getComponent() const override;
-    void initModule(AppSettins &plugin_settings) override;
-    void startModule() override;
-    void stopModule() override;
+    void init(AppSettins &plugin_settings) override;
+    void start() override;
+    void stop() override;
 
 private:
     QThread m_thread;

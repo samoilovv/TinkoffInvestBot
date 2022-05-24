@@ -10,6 +10,7 @@
 #include "hidestring.h"
 #include "customcomponent.h"
 #include "moduleinterface.h"
+#include "robotinterface.h"
 #include "pluginsloader.h"
 
 using namespace  hevaa;
@@ -195,10 +196,10 @@ void PluginsLoader::loadRobots()
     for (const QString &fileName : entryList) {
         QPluginLoader loader(pluginsDir.absoluteFilePath(fileName));
         auto plugin = loader.instance();
-        auto module = qobject_cast<hevaa::ModuleInterface *>(plugin);
+        auto module = qobject_cast<hevaa::RobotInterface *>(plugin);
         if (module) {
-            qDebug() << "Robot" << module->moduleName() << "is loaded";
-            module->initModule(m_app_settings);
+            qDebug() << "Robot" << module->robotName() << "is loaded";
+            module->init(m_app_settings);
             bool hasClassInfo = plugin->metaObject()->classInfoCount() > 1;
             QString robotname = hasClassInfo ? plugin->metaObject()->classInfo(0).value() : plugin->metaObject()->className();
             QString robotcaption = hasClassInfo ? plugin->metaObject()->classInfo(1).value() : plugin->metaObject()->className();

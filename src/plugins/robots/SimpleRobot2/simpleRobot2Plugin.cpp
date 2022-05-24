@@ -42,17 +42,7 @@ void SimpleRobot2Component::handleData(const hevaa::transport::message &msg)
             QString srv = msg.body()->data(1).toString();
             if (m_client->service(srv.toStdString()).get())
             {
-
-//                QMetaObject::invokeMethod(m_client->service(srv.toStdString()).get(),
-//                                      func.toStdString().c_str(),
-//                                      Qt::DirectConnection,
-//                                      Q_RETURN_ARG(ServiceReply, reply)
-//                                   );
-
-//                QString str = QString::fromStdString(reply.ptr()->DebugString());
-//                qDebug() << "Received message:" << str;
-//                hevaa::transport::message hm(hevaa::transport::Info, hevaa::transport::Node::create(hevaa::transport::Row{str}));
-//                emit transmitData(hm);
+                //todo
             } else
             {
                 qDebug() << "There is no such service:" << srv;
@@ -68,7 +58,7 @@ SimpleRobot2Manager::~SimpleRobot2Manager()
 
 }
 
-QString SimpleRobot2Manager::moduleName() const
+QString SimpleRobot2Manager::robotName() const
 {
     return "Robot2";
 }
@@ -78,23 +68,21 @@ QSharedPointer<CustomComponent> SimpleRobot2Manager::getComponent() const
     return m_component;
 }
 
-void SimpleRobot2Manager::initModule(AppSettins &plugin_settings)
+void SimpleRobot2Manager::init(AppSettins &plugin_settings)
 {
     m_component = QSharedPointer<SimpleRobot2Component>::create(plugin_settings);
 }
 
-void SimpleRobot2Manager::startModule()
+void SimpleRobot2Manager::start()
 {
-    qDebug() << "The TinkoffManager thread is" << QThread::currentThread();
-
-    m_thread.setObjectName(moduleName());
+    m_thread.setObjectName(robotName());
     m_component->moveToThread(&m_thread);
 
     qInfo() << "Starting" << m_thread.objectName() << "...";
     m_thread.start();
 }
 
-void SimpleRobot2Manager::stopModule()
+void SimpleRobot2Manager::stop()
 {
     m_thread.requestInterruption();
     m_thread.quit();

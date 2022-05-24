@@ -1,5 +1,5 @@
-#ifndef I_MODULE_PLUGIN
-#define I_MODULE_PLUGIN
+#ifndef ROBOT_INTERFACE
+#define ROBOT_INTERFACE
 
 #include <QtPlugin>
 #include "hevaa_common.h"
@@ -7,20 +7,20 @@
 
 namespace hevaa {
 
-    class IModulePlugin
+    class RobotInterface
     {
     public:
-        virtual ~IModulePlugin() {}
-        virtual QString moduleName() const = 0;
+        virtual ~RobotInterface() {}
+        virtual QString robotName() const = 0;
         virtual QSharedPointer<CustomComponent> getComponent() const = 0;
-        virtual void initModule(AppSettins &plugin_settings) {Q_UNUSED(plugin_settings)}
-        virtual void startModule() {}
-        virtual void stopModule() {}
+        virtual void init(AppSettins &plugin_settings) {Q_UNUSED(plugin_settings)}
+        virtual void start() {}
+        virtual void stop() {}
     };
 }
 
-#define HevaaModulePluginInterface_iid "Hevaa.HevaaModulePlugin/1.0"
+#define RobotInterface_iid "Hevaa.RobotInterface/1.0"
 
-Q_DECLARE_INTERFACE(hevaa::IModulePlugin, HevaaModulePluginInterface_iid)
+Q_DECLARE_INTERFACE(hevaa::RobotInterface, RobotInterface_iid)
 
-#endif // I_MODULE_PLUGIN
+#endif // ROBOT_INTERFACE

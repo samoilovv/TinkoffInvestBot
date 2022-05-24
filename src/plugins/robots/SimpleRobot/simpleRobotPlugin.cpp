@@ -47,7 +47,7 @@ SimpleRobotManager::~SimpleRobotManager()
 
 }
 
-QString SimpleRobotManager::moduleName() const
+QString SimpleRobotManager::robotName() const
 {
     return "SimpleRobotModule";
 }
@@ -57,26 +57,21 @@ QSharedPointer<CustomComponent> SimpleRobotManager::getComponent() const
     return m_component;
 }
 
-void SimpleRobotManager::initModule(AppSettins &plugin_settings)
+void SimpleRobotManager::init(AppSettins &plugin_settings)
 {
     m_component = QSharedPointer<SimpleRobot>::create(plugin_settings);
 }
 
-void SimpleRobotManager::startModule()
+void SimpleRobotManager::start()
 {
-    qDebug() << "The TinkoffManager thread is" << QThread::currentThread();
-
-    m_thread.setObjectName(moduleName());
+    m_thread.setObjectName(robotName());
     m_component->moveToThread(&m_thread);
-
-    connect(&m_thread, &QThread::started, [](){ qDebug() << "tinkoffThread send signal started!"; });
-    connect(&m_thread, &QThread::finished, m_component.data(), [](){ qDebug() << "tinkoffThread send signal finished!"; });
 
     qInfo() << "Starting" << m_thread.objectName() << "...";
     m_thread.start();
 }
 
-void SimpleRobotManager::stopModule()
+void SimpleRobotManager::stop()
 {
     m_thread.requestInterruption();
     m_thread.quit();

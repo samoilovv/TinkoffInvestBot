@@ -47,7 +47,7 @@ MovingAverageManager::~MovingAverageManager()
 
 }
 
-QString MovingAverageManager::moduleName() const
+QString MovingAverageManager::robotName() const
 {
     return "MovingAverageModule";
 }
@@ -57,26 +57,21 @@ QSharedPointer<CustomComponent> MovingAverageManager::getComponent() const
     return m_component;
 }
 
-void MovingAverageManager::initModule(AppSettins &plugin_settings)
+void MovingAverageManager::init(AppSettins &plugin_settings)
 {
     m_component = QSharedPointer<MovingAverage>::create(plugin_settings);
 }
 
-void MovingAverageManager::startModule()
+void MovingAverageManager::start()
 {
-    qDebug() << "The TinkoffManager thread is" << QThread::currentThread();
-
-    m_thread.setObjectName(moduleName());
+    m_thread.setObjectName(robotName());
     m_component->moveToThread(&m_thread);
-
-    connect(&m_thread, &QThread::started, [](){ qDebug() << "tinkoffThread send signal started!"; });
-    connect(&m_thread, &QThread::finished, m_component.data(), [](){ qDebug() << "tinkoffThread send signal finished!"; });
 
     qInfo() << "Starting" << m_thread.objectName() << "...";
     m_thread.start();
 }
 
-void MovingAverageManager::stopModule()
+void MovingAverageManager::stop()
 {
     m_thread.requestInterruption();
     m_thread.quit();
