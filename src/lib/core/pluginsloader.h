@@ -4,7 +4,7 @@
 #include <QObject>
 #include "hevaa_common.h"
 #include "hevaa_message.h"
-#include "imoduleplugin.h"
+#include "moduleinterface.h"
 
 /*!
     \brief Загрузчик плагинов

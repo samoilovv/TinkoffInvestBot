@@ -10,7 +10,8 @@ if (${CMAKE_VERSION} VERSION_LESS 3.19.0)
 else()
     add_library(${PROJECT_NAME}
         INTERFACE
-            ${CMAKE_CURRENT_SOURCE_DIR}/imoduleplugin.h
+            ${CMAKE_CURRENT_SOURCE_DIR}/moduleinterface.h
+            ${CMAKE_CURRENT_SOURCE_DIR}/robotinterface.h
     )
 endif()
 

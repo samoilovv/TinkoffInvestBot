@@ -5,7 +5,7 @@
 #include <QSharedPointer>
 #include "hevaa_common.h"
 #include "hevaa_tree.h"
-#include "imoduleplugin.h"
+#include "moduleinterface.h"
 #include "customcomponent.h"
 #include <tgbot/tgbot.h>
 

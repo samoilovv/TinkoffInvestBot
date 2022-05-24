@@ -8,6 +8,7 @@
 #include "tinkoffInvestConsts.h"
 #include "customservice.h"
 #include "sandboxservice.h"
+#include "usersservice.h"
 #include "commontypes.h"
 
 using namespace hevaa;
@@ -28,15 +29,6 @@ const hevaa::transport::Node TinkoffComponent::ComponentInfo()
     hevaa::transport::Row rootdata = {objectName()};
     auto root = hevaa::transport::Node::create(rootdata);
     auto commands = hevaa::transport::Node::create(TINKOFF_SERVISES);
-//    for (int i = 0; i < TINKOFF_SERVISES.count(); i++)
-//    {
-//        auto services = getServicesList(m_client, TINKOFF_SERVISES[i].toStringList()[0]);
-//        if (services.count() > 0)
-//        {
-//            auto buttons = hevaa::transport::Node::create(services);
-//            commands->appendChild(buttons);
-//        }
-//    }
     root->appendChild(commands);
     return root;
 }
@@ -49,22 +41,17 @@ void TinkoffComponent::handleData(const hevaa::transport::message &msg)
         {
             qDebug() << "Sending request to tinkoff...";
 
-            ServiceReply reply;
             QString func = msg.body()->data(0).toString();
-            QString srv = msg.body()->data(1).toString();
-            if (m_client->service(srv.toStdString()).get())
+            QString srv = msg.body()->data(1).toString();          
+            QString GetAccounts = "GetAccounts";
+            if (srv == "info")
             {
-
-//                QMetaObject::invokeMethod(m_client->service(srv.toStdString()).get(),
-//                                      func.toStdString().c_str(),
-//                                      Qt::DirectConnection,
-//                                      Q_RETURN_ARG(ServiceReply, reply)
-//                                   );
-
-//                QString str = QString::fromStdString(reply.ptr()->DebugString());
-//                qDebug() << "Received message:" << str;
-//                hevaa::transport::message hm(hevaa::transport::Info, hevaa::transport::Node::create(hevaa::transport::Row{str}));
-//                emit transmitData(hm);
+                auto userservice = std::dynamic_pointer_cast<Users>(m_client->service("users"));
+                ServiceReply reply = userservice->GetAccounts();
+                QString str = QString::fromStdString(reply.ptr()->DebugString());
+                qDebug() << "Received message:" << str;
+                hevaa::transport::message hm(hevaa::transport::Info, hevaa::transport::Node::create(hevaa::transport::Row{str}));
+                emit transmitData(hm);
             } else
             {
                 qDebug() << "There is no such service:" << srv;

@@ -4,7 +4,7 @@
 #include <QThread>
 #include <QSharedPointer>
 #include <QtSql/QSqlDatabase>
-#include "imoduleplugin.h"
+#include "moduleinterface.h"
 #include "customcomponent.h"
 
 /*!

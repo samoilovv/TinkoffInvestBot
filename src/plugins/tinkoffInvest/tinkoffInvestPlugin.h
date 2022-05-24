@@ -3,7 +3,7 @@
 
 #include <QThread>
 #include <QSharedPointer>
-#include "imoduleplugin.h"
+#include "moduleinterface.h"
 #include "customcomponent.h"
 #include "investapiclient.h"
 
@@ -37,7 +37,7 @@ class TinkoffManager: public QObject, public hevaa::IModulePlugin
 {
     Q_OBJECT
     Q_CLASSINFO("name", "tinkoffinvest")
-    Q_CLASSINFO("caption", "Управление вашими инвестициями")
+    Q_CLASSINFO("caption", "Управление инвестициями")
     Q_PLUGIN_METADATA(IID "ru.Hevaa.TinkoffInvestPlugin.1.0" FILE "tinkoffInvestPlugin.json")
     Q_INTERFACES(
             hevaa::IModulePlugin

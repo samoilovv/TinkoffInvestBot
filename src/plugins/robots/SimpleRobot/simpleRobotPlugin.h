@@ -3,7 +3,7 @@
 
 #include <QThread>
 #include <QSharedPointer>
-#include "imoduleplugin.h"
+#include "moduleinterface.h"
 #include "customcomponent.h"
 #include "investapiclient.h"
 

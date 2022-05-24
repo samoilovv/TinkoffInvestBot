@@ -9,7 +9,7 @@
 #include "hevaa_consts.h"
 #include "hidestring.h"
 #include "customcomponent.h"
-#include "imoduleplugin.h"
+#include "moduleinterface.h"
 #include "pluginsloader.h"
 
 using namespace  hevaa;
@@ -38,7 +38,7 @@ PluginsLoader::PluginsLoader(QString password, bool encode, QObject *parent) :
         auto commands = hevaa::transport::Node::create(m_robots);
         for (int i = 0; i < m_robots.count(); i++)
         {
-            hevaa::transport::Row services {QStringList({"start", "command1"}), QStringList({"stop", "command2"})};
+            hevaa::transport::Row services {QStringList({"Информация о счете", "info"}), QStringList({"Открыть счет", "open"}), QStringList({"Закрыть счет", "close"}), QStringList({"Акции", "shares"}), QStringList({"Купить", "buy"}), QStringList({"Продать", "sell"})};
             auto buttons = hevaa::transport::Node::create(services);
             commands->appendChild(buttons);
         }
