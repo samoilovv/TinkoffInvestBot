@@ -63,13 +63,13 @@ public slots:
 /*!
     \brief Менеджер телеграм бота
 */
-class TelegramManager: public QObject, public hevaa::IModulePlugin
+class TelegramManager: public QObject, public hevaa::ModuleInterface
 {
     Q_OBJECT
     Q_CLASSINFO("name", "TelegramBot")
     Q_PLUGIN_METADATA(IID "ru.Hevaa.TelegramPlugin.1.0" FILE "telegramPlugin.json")
     Q_INTERFACES(
-            hevaa::IModulePlugin
+            hevaa::ModuleInterface
             )
 
 public:

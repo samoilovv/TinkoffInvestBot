@@ -30,14 +30,14 @@ public slots:
 /*!
     \brief Менеджер простого торгового робота
 */
-class SimpleRobotManager: public QObject, public hevaa::IModulePlugin
+class SimpleRobotManager: public QObject, public hevaa::ModuleInterface
 {
     Q_OBJECT
     Q_CLASSINFO("name", "simplerobot")
     Q_CLASSINFO("caption", "Пример простого робота")
     Q_PLUGIN_METADATA(IID "ru.Hevaa.SimpleRobotPlugin.1.0" FILE "simpleRobotPlugin.json")
     Q_INTERFACES(
-            hevaa::IModulePlugin
+            hevaa::ModuleInterface
             )
 
 public:

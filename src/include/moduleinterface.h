@@ -1,5 +1,5 @@
-#ifndef I_MODULE_PLUGIN
-#define I_MODULE_PLUGIN
+#ifndef MODULE_INTERFACE
+#define MODULE_INTERFACE
 
 #include <QtPlugin>
 #include "hevaa_common.h"
@@ -7,10 +7,10 @@
 
 namespace hevaa {
 
-    class IModulePlugin
+    class ModuleInterface
     {
     public:
-        virtual ~IModulePlugin() {}
+        virtual ~ModuleInterface() {}
         virtual QString moduleName() const = 0;
         virtual QSharedPointer<CustomComponent> getComponent() const = 0;
         virtual void initModule(AppSettins &plugin_settings) {Q_UNUSED(plugin_settings)}
@@ -19,8 +19,8 @@ namespace hevaa {
     };
 }
 
-#define HevaaModulePluginInterface_iid "Hevaa.HevaaModulePlugin/1.0"
+#define ModuleInterface_iid "Hevaa.ModuleInterface/1.0"
 
-Q_DECLARE_INTERFACE(hevaa::IModulePlugin, HevaaModulePluginInterface_iid)
+Q_DECLARE_INTERFACE(hevaa::ModuleInterface, ModuleInterface_iid)
 
-#endif // I_MODULE_PLUGIN
+#endif // MODULE_INTERFACE

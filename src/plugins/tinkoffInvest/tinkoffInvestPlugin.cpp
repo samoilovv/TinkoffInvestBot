@@ -13,7 +13,7 @@
 
 using namespace hevaa;
 
-TinkoffComponent::TinkoffComponent(AppSettins &plugin_settings): CustomComponent(plugin_settings)
+TinkoffComponent::TinkoffComponent(AppSettins &plugin_settings, QObject *parent): CustomComponent(plugin_settings, parent)
 {
     setObjectName(COMPONENT_NAME_TINKOFF);
     m_client = QSharedPointer<InvestApiClient>::create(m_plugin_settings["TINKHOST"].toStdString(), m_plugin_settings["TINKTOKEN"].toStdString());
@@ -79,7 +79,7 @@ QSharedPointer<CustomComponent> TinkoffManager::getComponent() const
 
 void TinkoffManager::initModule(AppSettins &plugin_settings)
 {
-    m_component = QSharedPointer<TinkoffComponent>::create(plugin_settings);
+    m_component = QSharedPointer<TinkoffComponent>::create(plugin_settings, this);
 }
 
 void TinkoffManager::startModule()

@@ -90,8 +90,8 @@ bool PluginsLoader::loadSettings()
 
 void PluginsLoader::connectModules(const QString &sender, const QString &recipient)
 {
-    hevaa::IModulePlugin *senderModule = qobject_cast<hevaa::IModulePlugin *>(m_modules[sender]);
-    hevaa::IModulePlugin *recipientModule = qobject_cast<hevaa::IModulePlugin *>(m_modules[recipient]);
+    hevaa::ModuleInterface *senderModule = qobject_cast<hevaa::ModuleInterface *>(m_modules[sender]);
+    hevaa::ModuleInterface *recipientModule = qobject_cast<hevaa::ModuleInterface *>(m_modules[recipient]);
 
     if ((senderModule) && (recipientModule)) {
         auto sender = senderModule->getComponent();
@@ -110,7 +110,7 @@ void PluginsLoader::connectModules(const QString &sender, const QString &recipie
 void PluginsLoader::startModules()
 {
     foreach (QObject * value, m_modules) {
-        auto module = qobject_cast<hevaa::IModulePlugin *>(value);
+        auto module = qobject_cast<hevaa::ModuleInterface *>(value);
         if (module) {
             module->startModule();
         }
@@ -150,7 +150,7 @@ void PluginsLoader::saveSettings(bool encode)
 void PluginsLoader::stopModules()
 {
     foreach (QObject *value, m_modules) {
-        auto module = qobject_cast<hevaa::IModulePlugin * >(value);
+        auto module = qobject_cast<hevaa::ModuleInterface * >(value);
         if (module) {
             module->stopModule();
         }
@@ -164,7 +164,7 @@ void PluginsLoader::loadModules()
     for (const QString &fileName : entryList) {
         QPluginLoader loader(pluginsDir.absoluteFilePath(fileName));
         auto plugin = loader.instance();
-        auto module = qobject_cast<hevaa::IModulePlugin *>(plugin);
+        auto module = qobject_cast<hevaa::ModuleInterface *>(plugin);
         if (module) {
             qDebug() << "Plugin" << module->moduleName() << "is loaded";
             module->initModule(m_app_settings);
@@ -185,16 +185,17 @@ void PluginsLoader::loadRobots()
 {
     if (m_tinkoffInvest)
     {
-        QString tinkoffInvestname = "tinkoffinvest";
-        QString tinkoffInvestcaption = "Управление вашими инвестициями";
-        m_robots.append(QStringList({tinkoffInvestname, tinkoffInvestcaption}));
+        bool hasClassInfo = m_tinkoffInvest->parent()->metaObject()->classInfoCount() > 1;
+        QString name = hasClassInfo ? m_tinkoffInvest->parent()->metaObject()->classInfo(0).value() : m_tinkoffInvest->objectName();
+        QString caption = hasClassInfo ? m_tinkoffInvest->parent()->metaObject()->classInfo(1).value() : m_tinkoffInvest->objectName();
+        m_robots.append(QStringList({name, caption}));
     }
     QDir pluginsDir = QDir(QCoreApplication::applicationDirPath() + "/robots");
     const auto entryList = pluginsDir.entryList(QDir::Files);
     for (const QString &fileName : entryList) {
         QPluginLoader loader(pluginsDir.absoluteFilePath(fileName));
         auto plugin = loader.instance();
-        auto module = qobject_cast<hevaa::IModulePlugin *>(plugin);
+        auto module = qobject_cast<hevaa::ModuleInterface *>(plugin);
         if (module) {
             qDebug() << "Robot" << module->moduleName() << "is loaded";
             module->initModule(m_app_settings);

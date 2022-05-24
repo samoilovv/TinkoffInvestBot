@@ -15,7 +15,7 @@ class TinkoffComponent : public CustomComponent
 Q_OBJECT
 
 public:
-    TinkoffComponent(AppSettins &plugin_settings);
+    TinkoffComponent(AppSettins &plugin_settings, QObject *parent = nullptr);
     ~TinkoffComponent();
 
 protected:
@@ -33,14 +33,14 @@ public slots:
     Позволяет управлять счетами, открывать и закрывать позиции,
     запрашивать и анализировать различную торговую информацию и т.д.
 */
-class TinkoffManager: public QObject, public hevaa::IModulePlugin
+class TinkoffManager: public QObject, public hevaa::ModuleInterface
 {
     Q_OBJECT
     Q_CLASSINFO("name", "tinkoffinvest")
     Q_CLASSINFO("caption", "Управление инвестициями")
     Q_PLUGIN_METADATA(IID "ru.Hevaa.TinkoffInvestPlugin.1.0" FILE "tinkoffInvestPlugin.json")
     Q_INTERFACES(
-            hevaa::IModulePlugin
+            hevaa::ModuleInterface
             )
 
 public:
