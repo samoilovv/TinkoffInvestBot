@@ -29,13 +29,7 @@ add_custom_command(
         --plugin=protoc-gen-grpc="${_GRPC_CPP_PLUGIN_EXECUTABLE}"
         "${hw_proto}"
       DEPENDS "${hw_proto}")
-    
-execute_process(
-    COMMAND sh ${CMAKE_CURRENT_SOURCE_DIR}/cmake/fix_keywords.sh ${CMAKE_CURRENT_BINARY_DIR}
-    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-    RESULT_VARIABLE result
-    )    
-    
+       
 add_library(hw_grpc_proto
   ${OUTPUT_PB_SOURCES}
   ${OUTPUT_PB_HEADERS}
